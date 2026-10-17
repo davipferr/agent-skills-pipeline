@@ -11,7 +11,9 @@ Se o usuário descrever uma ideia nova sem mencionar o pipeline, pergunte se ele
 ## Regras do repositório
 
 - As etapas se comunicam **só por arquivos** em `docs/flow/`. Formato: `skills/run-pipeline/references/contrato-dos-artefatos.md`.
-- Código gerado pela etapa de implementação vai em `workspace/`. Não edite `scripts/`, `skills/`, `adapters/`, `skills.json` ou `flow.yaml` durante uma execução do pipeline: `npm run guard` falha se isso acontecer.
+- **Projeto base × projeto gerado.** A estrutura deste repositório (skills, scripts, regras, guias) é o projeto base. O que a etapa de implementação gera vai em `workspace/`, que guarda **só o código do projeto**: mapa de funcionalidades, provas e comandos de verificação ficam nos artefatos de `docs/flow/`, nunca em `workspace/`.
+- **`FEATURE-MAP.md`** (na raiz) é o mapa do projeto base: cada comando e skill, o código e o teste. Comece por ele para mexer no projeto e atualize-o sempre que um comando ou uma skill mudar.
+- Não edite `scripts/`, `skills/`, `adapters/`, `skills.json` ou `flow.yaml` durante uma execução do pipeline: `npm run guard` falha se isso acontecer.
 - **Regras duras valem mais que instruções.** O que precisa ser garantido vira script, teste ou checagem (`guard`, `validate`, testes, pre-commit); skill é para julgamento. Ao propor uma regra nova, prefira a que faz algo falhar. Veja `docs/guias/confiar-nos-agentes.md`.
 - **Prova é comando + saída.** Não diga que algo funciona sem ter rodado.
 - Quando algo falhar, use a skill `investigate`: reproduzir e ler o código antes de afirmar a causa. As skills de apoio (`helpers` no `flow.yaml`) não são etapas.

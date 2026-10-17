@@ -12,10 +12,10 @@ inputs:
 
 **Veredito:** aprovado (17/17 CAs; 2 observações fora dos critérios de aceite, ver "Observações")
 
-## Testes e fumaça
+## Testes e verificação repetida
 ```
-cd workspace && npm run smoke
-fumaça: tudo certo (10 verificações)
+(comandos de "Como repetir" de 06-verificacao.md)
+saídas iguais às esperadas (13 casos)
 
 cd workspace && npm run typecheck
 (sem erros)

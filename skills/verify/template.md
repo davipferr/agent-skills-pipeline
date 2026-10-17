@@ -18,8 +18,8 @@ inputs:
 - Build/typecheck/testes: `<comando>` → <resumo da saída>
 
 ## Funcionalidades (como usuário)
-| Funcionalidade (FEATURE-MAP) | CA | Comando / ação | Saída real (trecho) | ✅/❌ |
-|------------------------------|----|----------------|---------------------|-------|
+| Funcionalidade (mapa do 05) | CA | Comando / ação | Saída real (trecho) | ✅/❌ |
+|-----------------------------|----|----------------|---------------------|-------|
 | <nome> | CA-1 | `<comando exato>` | `<saída>` | ✅ |
 
 ## Bordas
@@ -27,11 +27,14 @@ inputs:
 |------|----------------|---------------------|-------|
 | entrada vazia | `<...>` | `<...>` | ✅ |
 
-## Script de fumaça
+## Como repetir
+Comandos para colar num terminal, a partir da raiz do repositório. Criam as entradas numa pasta temporária e não gravam nada em `workspace/`.
 ```bash
-cd workspace && <comando, ex.: npm run smoke>
+t=$(mktemp -d)
+printf '<entrada>' > "$t/<arquivo>"
+<comando do programa> "$t/<arquivo>"   # esperado: <saída>
+rm -rf "$t"
 ```
-<saída resumida da última execução>
 
 ## Falhas
 1. **<título>** — reproduzir: `<passos>` · esperado: <...> · obtido: <...> · causa: `<arquivo:linha>` <explicação> · etapa a refazer: implement

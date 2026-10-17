@@ -60,8 +60,8 @@ Azul = skill escrita neste repositório (`skills/`). Laranja = skill externa do 
 | 2 | Interrogatório | `grilling` | [mattpocock/skills](https://www.skills.sh/mattpocock/skills/grilling) | 01 | `02-decisoes.md` |
 | 3 | PRD | `write-prd` | local | 01, 02 | `03-prd.md` |
 | 4 | Arquitetura e fatias | `plan-architecture` | local | 03 | `04-arquitetura.md` |
-| 5 | Implementação com TDD | `tdd` | [mattpocock/skills](https://www.skills.sh/mattpocock/skills/tdd) | 03, 04 | `05-implementacao.md` + código e `FEATURE-MAP.md` em `workspace/` |
-| 6 | Verificação como usuário | `verify` | local | 03, 04, 05 | `06-verificacao.md` + `workspace/verify/` (fumaça) |
+| 5 | Implementação com TDD | `tdd` | [mattpocock/skills](https://www.skills.sh/mattpocock/skills/tdd) | 03, 04 | `05-implementacao.md` (com o mapa de funcionalidades) + código em `workspace/` |
+| 6 | Verificação como usuário | `verify` | local | 03, 04, 05 | `06-verificacao.md` (provas e como repetir) |
 | 7 | Revisão contra o PRD | `review-against-prd` | local | 03, 04, 05, 06 | `07-revisao.md` |
 | 8 | Relatório de entrega | `ship-report` | local | 03, 06, 07 | `08-entrega.md` |
 
@@ -75,7 +75,19 @@ Ao lado do fluxo ficam as **skills de apoio** (`helpers` no `flow.yaml`), que n�
 | `harden` | transforma o "Trabalho manual" das entregas em regras duras |
 | `eval-skill` | testa uma skill com os casos de [`evals/`](evals/README.md), num agente sem contexto, e dá nota |
 
-Quer ver uma execução completa? [`examples/contador-de-palavras/`](examples/contador-de-palavras/) tem os 8 artefatos, o código, o mapa de funcionalidades e o script de fumaça.
+Quer ver uma execução completa? [`examples/contador-de-palavras/`](examples/contador-de-palavras/) tem os 8 artefatos e o código que saiu no fim.
+
+## O projeto base e o projeto gerado
+
+Este repositório é um **projeto base**: o que vale, quando você o usa para começar outro repositório ou para levar o pipeline para um projeto que já existe, é a **estrutura** dele. O que ele gera numa execução não faz parte da base.
+
+| | Projeto base (a estrutura) | Projeto gerado (o resultado de uma execução) |
+|---|---|---|
+| O que é | `skills/`, `adapters/`, `scripts/`, `flow.yaml`, `skills.json`, `evals/`, `.githooks/`, os guias (inclusive [Confiar nos agentes](docs/guias/confiar-nos-agentes.md)) | o código que a etapa de implementação escreve |
+| Onde fica | na raiz deste repositório | `workspace/` (num projeto que já existia, o próprio código dele) |
+| O que tem | as skills, as regras duras (`validate`, `guard`, pre-commit), o guia e o [`FEATURE-MAP.md`](FEATURE-MAP.md) (o mapa do projeto base) | **só o código do projeto**: fontes, testes e configuração |
+| Registros da execução | `docs/flow/` (o mapa de funcionalidades fica no `05-implementacao.md`; as provas e os comandos para repetir a verificação, no `06-verificacao.md`) | nenhum |
+| Vai para outro projeto? | sim, inteira | não |
 
 ## Começando
 
@@ -128,7 +140,6 @@ Quando terminar, `npm run archive` move a execução para `docs/runs/<data>-<ide
 | `npm run diagram -- --write` | Regenera o diagrama deste README a partir do `flow.yaml` |
 | `npm run archive` | Move a execução atual para `docs/runs/` |
 | `npm run guard` | Falha se o pipeline (`flow.yaml`, `skills/`, `scripts/`...) mudou durante uma execução sem você aprovar (`git add`) |
-| `npm run adopt -- <pasta>` | Leva o pipeline para um projeto que já existe, ou o atualiza (`-- --dry-run` só mostra) |
 | `npm run check` | Typecheck + testes + validate + guard (o pre-commit roda isto) |
 
 ## Estrutura
@@ -159,11 +170,12 @@ agent-skills-pipeline/
 │   ├── runs/                  # execuções arquivadas
 │   └── guias/                 # documentação detalhada
 ├── evals/                     # casos de teste das skills (eval-skill)
-├── workspace/                 # código gerado pela etapa 5 (fora do git), com FEATURE-MAP.md e verify/
+├── workspace/                 # o projeto gerado: só o código da etapa 5 (fora do git)
 ├── examples/contador-de-palavras/  # uma execução completa, para consulta
 ├── .githooks/pre-commit       # roda npm run precommit (ligado pelo npm run setup)
-├── scripts/                   # validate, status, setup, new-skill, diagram, archive, guard, adopt
+├── scripts/                   # validate, status, setup, new-skill, diagram, archive, guard
 │   └── lib/                   # lógica pura (testada em test/)
+├── FEATURE-MAP.md             # mapa do projeto base: cada comando e skill, o código e o teste
 ├── AGENTS.md / CLAUDE.md      # instruções do repositório para Codex / Claude Code
 └── test/
 ```
@@ -172,7 +184,7 @@ agent-skills-pipeline/
 
 1. [Como o fluxo funciona](docs/guias/como-funciona.md): skills, artefatos, estados, o maestro e os adapters
 2. [Adicionar uma skill](docs/guias/adicionar-skills.md): do skills.sh ou escrita por você
-3. [Montar o seu próprio fluxo](docs/guias/montar-seu-fluxo.md): trocar, reordenar e criar etapas, ou levar o pipeline para um projeto que já existe (`npm run adopt`)
+3. [Montar o seu próprio fluxo](docs/guias/montar-seu-fluxo.md): trocar, reordenar e criar etapas, ou levar o pipeline para um projeto que já existe, conversando com o agente
 4. [Usar com Claude e ChatGPT](docs/guias/usar-com-claude-e-chatgpt.md): Claude Code, Claude.ai, Codex e ChatGPT web
 5. [Confiar nos agentes](docs/guias/confiar-nos-agentes.md): verificação, mapa de funcionalidades, regras duras, `harden` e evals, para você não virar o gargalo
 

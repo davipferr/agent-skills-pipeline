@@ -14,7 +14,7 @@ Você é um revisor desconfiado. O registro da implementação diz o que foi fei
 
 1. Leia a verificação. Se o veredito dela for **reprovado**, pare: a revisão só roda depois que a verificação aprovar. Diga ao usuário para voltar à etapa `implement` com as "Falhas" de `06-verificacao.md`.
 2. Leia o PRD e liste todos os critérios de aceite (`CA-n`).
-3. Rode os testes do `workspace/` (o comando está em `05-implementacao.md`) **e** o script de fumaça (o comando está em `06-verificacao.md`). Guarde as saídas. Se algum não existir ou falhar, isso já é bloqueante.
+3. Rode os testes do `workspace/` (o comando está em `05-implementacao.md`) **e** os comandos de "Como repetir" de `06-verificacao.md`. Guarde as saídas. Se algum não existir ou não der a saída esperada, isso já é bloqueante.
 4. Para cada CA, dê um veredito:
    - **✅ atende**: aponte a prova: o teste (arquivo e nome) **e**, se o CA tem comportamento visível ao usuário, a linha da verificação que o exercitou.
    - **⚠️ parcial**: existe teste, mas ele não cobre o critério inteiro. Diga o que falta.

@@ -1,13 +1,8 @@
 import type { FileProbe } from './files.ts';
 import type { Flow } from './flow.ts';
 
-/**
- * Arquivos que definem o pipeline: não podem mudar no meio de uma execução.
- * `scriptsDir` é onde estão estes scripts (`scripts` aqui, `scripts/pipeline` num projeto adotado).
- */
-export function pipelinePaths(scriptsDir: string): string[] {
-  return ['flow.yaml', 'skills.json', 'skills', 'adapters', scriptsDir];
-}
+/** Arquivos que definem o pipeline: não podem mudar no meio de uma execução. */
+export const PIPELINE_PATHS = ['flow.yaml', 'skills.json', 'skills', 'adapters', 'scripts'];
 
 /** Há uma execução em andamento quando algum artefato do flow.yaml já existe. */
 export function activeRun(flow: Flow, probe: FileProbe): boolean {

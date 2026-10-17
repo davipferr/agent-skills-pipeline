@@ -77,28 +77,22 @@ npm run diagram -- --write
 
 ## Levar o mecanismo para outro repositório
 
-Num projeto novo, comece por uma cópia deste repositório. Num projeto que **já existe**, rode a partir daqui:
+**Projeto novo:** comece por uma cópia deste repositório.
 
-```bash
-npm run adopt -- ../meu-projeto --dry-run
-```
+**Projeto que já existe:** faça conversando com o agente, aberto no projeto de destino. Cada projeto tem suas particularidades (scripts com o mesmo nome, um `AGENTS.md` próprio, outro gerenciador de hooks), e o agente decide caso a caso com você. Um pedido que funciona:
 
-```bash
-npm run adopt -- ../meu-projeto
-```
+> Quero usar o pipeline de skills de `<caminho deste repositório>` neste projeto. Siga a seção "Levar o mecanismo para outro repositório" do guia `docs/guias/montar-seu-fluxo.md` de lá. Antes de gravar, me mostre o que vai copiar e o que vai mudar no que já existe.
 
-O `adopt`:
+O agente deve seguir esta lista, nessa ordem:
 
-| Leva | Como |
-|------|------|
-| `skills/`, `adapters/` | copia (e atualiza, se rodar de novo) |
-| scripts do pipeline | em `scripts/pipeline/`, para não misturar com os scripts do projeto |
-| `flow.yaml`, `skills.json`, `.githooks/pre-commit`, `evals/` | só se o projeto ainda não tiver: depois disso, são dele |
-| `package.json` | acrescenta os scripts (`setup`, `status`, `validate`, `guard`...), `yaml` como devDependency e `engines.node`; **nunca sobrescreve** o que já existe, e lista os conflitos |
-| `AGENTS.md` | uma seção entre marcadores, atualizada a cada `adopt`; inclui a regra "neste projeto não há `workspace/`: o código é a raiz do repositório" |
-| `CLAUDE.md`, `.gitignore` | `@AGENTS.md` e as pastas instaladas pelo setup, se faltarem |
+1. **Copiar a estrutura do projeto base** (veja [o projeto base e o projeto gerado](../../README.md#o-projeto-base-e-o-projeto-gerado)): `skills/`, `adapters/`, `scripts/`, `flow.yaml`, `skills.json`, `.githooks/pre-commit`, `evals/README.md`, `docs/guias/` e o `FEATURE-MAP.md` (o mapa do projeto base). Nada de `docs/flow/`, `docs/runs/`, `examples/` nem `workspace/`: isso é o que o projeto base gerou, não a estrutura. Se o projeto já tiver uma `scripts/` própria, coloque os do pipeline numa subpasta (ex.: `scripts/pipeline/`), ajuste os caminhos e acrescente essa pasta em `PIPELINE_PATHS`, no `scripts/lib/guard.ts`.
+2. **Juntar ao `package.json`** os scripts `setup`, `validate`, `status`, `new-skill`, `diagram`, `archive`, `guard` e `precommit`, a dependência `yaml` (como devDependency) e `engines.node >= 22.18`. **Nunca sobrescrever** um script que já existe: se o nome colidir, perguntar ao dono. O maestro depende de `npm run status` e de `npm run guard`.
+3. **Acrescentar ao `AGENTS.md`** do projeto, sem apagar o que já existe, as regras deste repositório (a seção "Regras do repositório" do `AGENTS.md` daqui), trocando a regra do `workspace/` por: *"neste projeto não existe `workspace/`; onde as skills dizem `workspace/`, entenda a raiz do repositório"*. Se o projeto usa Claude Code, o `CLAUDE.md` precisa de `@AGENTS.md`.
+4. **Acrescentar ao `.gitignore`** `.claude/skills/` e `.agents/skills/`.
+5. **Não criar nada dentro do código do projeto** além do que o pipeline precisa para rodar (os scripts e o `package.json`). O mapa de funcionalidades e as provas nascem em `docs/flow/` na primeira execução do pipeline.
+6. Rodar `npm install`, `npm run setup` e `npm run validate`, e mostrar a saída.
 
-Depois, no projeto: `npm install`, `npm run setup` e `npm run validate`. Para atualizar o projeto quando este template evoluir, rode o `adopt` de novo: o que é do projeto (fluxo, manifesto, scripts e regras próprias) fica como está.
+Para **atualizar** um projeto quando este template evoluir, peça o mesmo, dizendo que é uma atualização: o agente compara a camada do pipeline dos dois lados, mostra as diferenças e preserva o que é do projeto (o `flow.yaml` e o `skills.json` dele, as regras próprias do `AGENTS.md` e os scripts dele).
 
 ## Princípios que valem para qualquer fluxo
 

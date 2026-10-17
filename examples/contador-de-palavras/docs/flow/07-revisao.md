@@ -12,10 +12,10 @@ inputs:
 
 **Veredito:** aprovado
 
-## Testes e fumaça
+## Testes e verificação repetida
 ```
-$ cd workspace && npm run smoke
-fumaça: tudo certo (8 verificações)
+$ (comandos de "Como repetir" de 06-verificacao.md)
+saídas iguais às esperadas (8 casos)
 
 $ cd workspace && npm test
 ℹ tests 8

@@ -17,7 +17,6 @@ cd workspace
 node src/cli.ts meu-texto.md --top 5
 cat meu-texto.md | node src/cli.ts
 npm test
-npm run smoke
 ```
 
 ## Decisões que importam

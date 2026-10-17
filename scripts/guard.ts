@@ -6,9 +6,8 @@
 // depois de `git add` (ou de um commit).
 
 import { spawnSync } from 'node:child_process';
-import { relative } from 'node:path';
 import { parseArgs } from 'node:util';
-import { activeRun, pipelinePaths, unapprovedEdits } from './lib/guard.ts';
+import { activeRun, PIPELINE_PATHS, unapprovedEdits } from './lib/guard.ts';
 import { loadProject, printIssues, bold, dim, green, red, yellow } from './lib/project.ts';
 
 const { values } = parseArgs({ options: { root: { type: 'string' } } });
@@ -23,7 +22,7 @@ if (!activeRun(project.flow, project.probe)) {
   process.exit(0);
 }
 
-const paths = pipelinePaths(relative(project.root, import.meta.dirname).replaceAll('\\', '/'));
+const paths = PIPELINE_PATHS;
 const git = spawnSync('git', ['status', '--porcelain=v1', '--untracked-files=all', '--', ...paths], {
   cwd: project.root,
   encoding: 'utf8',

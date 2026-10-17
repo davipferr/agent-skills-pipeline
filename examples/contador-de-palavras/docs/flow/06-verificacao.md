@@ -12,13 +12,13 @@ inputs:
 **Veredito:** aprovado (1 observação fora dos critérios de aceite)
 
 ## Ambiente
-- Cópia limpa em: pasta temporária fora do repositório (`/tmp/tmp.XXXX`), só com `package.json`, `src/`, `test/` e `verify/`
+- Cópia limpa em: pasta temporária fora do repositório (`/tmp/tmp.XXXX`), só com `package.json`, `src/` e `test/`
 - Sistema e runtime: Windows 11 (Git Bash), Node v25.5.0
 - Instalação: nada a instalar (sem dependências) → ok
 - Testes: `npm test` → `tests 8 · pass 8 · fail 0`
 
 ## Funcionalidades (como usuário)
-| Funcionalidade (FEATURE-MAP) | CA | Comando / ação | Saída real (trecho) | ✅/❌ |
+| Funcionalidade (mapa do 05) | CA | Comando / ação | Saída real (trecho) | ✅/❌ |
 |------------------------------|----|----------------|---------------------|-------|
 | Contar um arquivo | CA-1 | `node src/cli.ts a.txt` (`olá mundo olá`) | `palavras: 3` · `linhas: 1` · `caracteres: 13` | ✅ |
 | Palavras mais frequentes | CA-2 | `node src/cli.ts b.txt --top 1` (`Casa casa CASA rua`) | `casa: 3` | ✅ |
@@ -35,11 +35,26 @@ inputs:
 | volume grande | 200 mil palavras (1,6 MB), `--top 1` | `palavra: 200000` em 0,17 s | ✅ |
 | `--top` inválido | `--top 0` e `--top abc` | `--top precisa ser um inteiro maior que zero`, código 1 | ✅ |
 
-## Script de fumaça
+## Como repetir
+Comandos para colar num terminal, a partir da raiz do repositório. Criam as entradas numa pasta temporária e não gravam nada em `workspace/`. Rodados ao gravar esta verificação: todas as saídas bateram com o esperado.
 ```bash
-cd workspace && npm run smoke
+cd examples/contador-de-palavras/workspace
+t=$(mktemp -d)
+printf 'olá mundo olá' > "$t/a.txt"
+node src/cli.ts "$t/a.txt"                        # esperado: palavras: 3 · linhas: 1 · caracteres: 13 (CA-1)
+printf 'Casa casa CASA rua' > "$t/b.txt"
+node src/cli.ts "$t/b.txt" --top 1                # esperado: ... e por último casa: 3 (CA-2)
+printf 'pé-de-moleque é ótimo' > "$t/c.txt"
+node src/cli.ts "$t/c.txt"                        # esperado: palavras: 3 (CA-3)
+node src/cli.ts "$t/nao existe.txt"; echo "código $?"   # esperado: arquivo não encontrado: ... e código 1 (CA-4)
+printf '' > "$t/vazio.txt"
+node src/cli.ts "$t/vazio.txt"                    # esperado: palavras: 0 · linhas: 0 · caracteres: 0 (CA-5)
+printf 'oi mundo\n' | node src/cli.ts             # esperado: palavras: 2 · linhas: 1 (stdin)
+printf 'um\r\ndois\r\n' > "$t/crlf.txt"
+node src/cli.ts "$t/crlf.txt"                     # esperado: linhas: 2 · caracteres: 10 (CRLF)
+node src/cli.ts "$t/a.txt" --top 0; echo "código $?"    # esperado: --top precisa ser um inteiro maior que zero e código 1
+rm -rf "$t"; cd - > /dev/null
 ```
-8 verificações (CA-1 a CA-5, stdin, CRLF, `--top` inválido) → `fumaça: tudo certo`
 
 ## Falhas
 - nenhuma

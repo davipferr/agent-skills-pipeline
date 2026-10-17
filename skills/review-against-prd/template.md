@@ -12,9 +12,9 @@ inputs:
 
 **Veredito:** aprovado | reprovado
 
-## Testes e fumaça
+## Testes e verificação repetida
 ```
-<comandos rodados (testes e fumaça) e o resumo da saída: quantos passaram/falharam>
+<comandos rodados (testes e "Como repetir" da verificação) e o resumo da saída>
 ```
 
 ## Critérios de aceite

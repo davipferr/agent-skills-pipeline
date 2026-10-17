@@ -21,7 +21,6 @@ node bin/flashcards.ts espanhol.md                    # gera espanhol.csv ao lad
 node bin/flashcards.ts espanhol.md -o saida/cards.csv # ou num caminho escolhido
 npm test                                              # 27 testes
 npm install && npm run typecheck                      # typecheck (instala typescript e @types/node)
-npm run smoke                                         # fumaça: usa o comando como um usuário
 ```
 Exemplo de `espanhol.md`:
 ```markdown
@@ -50,7 +49,7 @@ No Anki: *Arquivo → Importar*, escolha o `.csv` e o tipo de nota **Básico**. 
 | O que um humano precisou fazer (ou ficou sem verificar) | Regra dura que evitaria |
 |----------------------------------------------------------|-------------------------|
 | Corrigir à mão o `workspace/tsconfig.json`, que herdava de `../tsconfig.json` e quebrou depois do `npm run archive` | A etapa `verify` roda o workspace numa cópia fora do repositório; o adapter do `tdd` e a `plan-architecture` exigem que `workspace/` funcione sozinho (com as próprias dependências de typecheck) |
-| Criar um `espanhol.md` e rodar o comando para ver se funcionava de verdade | A etapa `verify` usa o comando como usuário e deixa o `npm run smoke`; o `FEATURE-MAP.md` diz como rodar |
+| Criar um `espanhol.md` e rodar o comando para ver se funcionava de verdade | A etapa `verify` usa o comando como usuário e deixa em `06-verificacao.md` os comandos para repetir; o mapa de funcionalidades do `05-implementacao.md` diz como rodar |
 | Importar o CSV no Anki (ainda não feito) | Não há como automatizar sem o aplicativo; continua manual |
 
 ## Trilha

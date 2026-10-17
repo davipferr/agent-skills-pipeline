@@ -29,13 +29,13 @@ Testes provam que os testes passam. A etapa [`verify`](../../skills/verify/SKILL
 - copia `workspace/` para **fora do repositório** e roda lá (pega o que só funciona por herança da pasta de cima, como um `tsconfig` com `extends: "../tsconfig.json"`);
 - roda cada funcionalidade com entradas reais e procura bordas (vazio, CRLF, caminho com espaço, volume);
 - guarda **comando + saída real** como prova em `docs/flow/06-verificacao.md`;
-- deixa um **script de fumaça** (`npm run smoke`) para a próxima verificação custar um comando.
+- deixa, no próprio artefato, os **comandos para repetir** a verificação, sem gravar nada no código do projeto.
 
 Se reprovar, o maestro volta para a implementação com as falhas já escritas. Você não precisa reproduzir nada.
 
-### 2. Mapa de funcionalidades (`workspace/FEATURE-MAP.md`)
+### 2. Mapa de funcionalidades (no `05-implementacao.md`)
 
-Um agente não sabe operar o seu programa: que comando, que tela, que atalho, onde está o código. O mapa diz. A implementação o mantém, a verificação o usa, e qualquer pedido futuro ("tem um bug na exportação") começa por ele. Veja o do [exemplo](../../examples/contador-de-palavras/workspace/FEATURE-MAP.md).
+Um agente não sabe operar o seu programa: que comando, que tela, que atalho, onde está o código. O mapa diz. A implementação o mantém, a verificação o usa, e qualquer pedido futuro ("tem um bug na exportação") começa por ele. O projeto base tem o seu: o [`FEATURE-MAP.md`](../../FEATURE-MAP.md) na raiz, com cada comando e skill, o código e o teste. O de cada projeto gerado é uma seção do `docs/flow/05-implementacao.md`, e não um arquivo dentro do código: o projeto gerado fica só com o código. Veja o do [exemplo](../../examples/contador-de-palavras/docs/flow/05-implementacao.md).
 
 ### 3. Parar de adivinhar (skill `investigate`)
 

@@ -17,7 +17,6 @@ cd workspace
 <comando de instalação>
 <comando de uso>
 <comando de teste>
-<comando de fumaça>
 ```
 
 ## Decisões que importam
