@@ -1,0 +1,53 @@
+{
+  "version": 1,
+  "skills": {
+    "capture-idea": {
+      "source": ".",
+      "sourceType": "local",
+      "computedHash": "02bb206441f57af0aeb549db863f371df6c9494cd411de3fbc57c590413838d4"
+    },
+    "codebase-design": {
+      "source": "mattpocock/skills",
+      "sourceType": "github",
+      "skillPath": "skills/engineering/codebase-design/SKILL.md",
+      "computedHash": "fb1d8ab98ad151551eeade003e3ae55a46578a380fd9fc3ed4dbf9c2fbce0a9f"
+    },
+    "grilling": {
+      "source": "mattpocock/skills",
+      "sourceType": "github",
+      "skillPath": "skills/productivity/grilling/SKILL.md",
+      "computedHash": "c3b3e67f18495984385413bc6be7e2acbf2139c6cf52ef42abdda7242a791822"
+    },
+    "plan-architecture": {
+      "source": ".",
+      "sourceType": "local",
+      "computedHash": "ebbb716723116af70bd958c006542bb2835d4e87488821779db5753289805411"
+    },
+    "review-against-prd": {
+      "source": ".",
+      "sourceType": "local",
+      "computedHash": "809ff93610c39fd82bf756fca3eb3a477fd90d6e8889ee7eb3099db4b13547e9"
+    },
+    "run-pipeline": {
+      "source": ".",
+      "sourceType": "local",
+      "computedHash": "6ae80f9a288ad2e8f5dcda0abc960c0104b1d40e1c98c689ba0010aadf06e85e"
+    },
+    "ship-report": {
+      "source": ".",
+      "sourceType": "local",
+      "computedHash": "b1ef5e82642e527fc7a2a770ded3aa1c7144d2dfa9185932a3e05848c0009e54"
+    },
+    "tdd": {
+      "source": "mattpocock/skills",
+      "sourceType": "github",
+      "skillPath": "skills/engineering/tdd/SKILL.md",
+      "computedHash": "535d1a6f3bd5bded8971e7e4ea76538907cbff6b6d32c39cf97b669869dcd383"
+    },
+    "write-prd": {
+      "source": ".",
+      "sourceType": "local",
+      "computedHash": "9d924054dcd7917abc8e3768b1aea141a55f1b87e48fbbc6821f07e238fdf0ac"
+    }
+  }
+}

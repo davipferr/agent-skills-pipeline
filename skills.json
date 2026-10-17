@@ -1,0 +1,11 @@
+{
+  "$comment": "Skills externas (do skills.sh / GitHub) que o pipeline usa. `npm run setup` instala tudo isto + as skills locais de skills/ para cada agente em `agents`.",
+  "agents": ["claude-code", "codex"],
+  "external": [
+    {
+      "source": "mattpocock/skills",
+      "skills": ["grilling", "tdd", "codebase-design"],
+      "why": "grilling: interrogatório da ideia. tdd: implementação em fatias vermelho→verde. codebase-design: vocabulário que o tdd consulta."
+    }
+  ]
+}
