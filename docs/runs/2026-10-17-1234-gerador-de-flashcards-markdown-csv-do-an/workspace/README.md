@@ -13,9 +13,10 @@ Cada linha com `::` é um card: o que vem antes do **primeiro** `::` é a pergun
 
 - hola :: olá
 - ¿Cómo estás? :: Como você está?
+
 1. adiós :: tchau
 
-Linhas sem "::" (títulos, comentários, linhas em branco) são ignoradas.
+Linhas sem o separador (títulos, comentários, linhas em branco) são ignoradas.
 ```
 
 Regras:
@@ -42,7 +43,7 @@ Códigos de saída: `0` sucesso · `1` erro de arquivo ou nenhum card válido (n
 
 ## Importar no Anki
 
-1. *Arquivo → Importar* e escolha o `.csv`.
+1. _Arquivo → Importar_ e escolha o `.csv`.
 2. O CSV já informa separador (vírgula), HTML desligado e baralho. Escolha o tipo de nota **Básico** (Basic).
 3. Para reimportar sem duplicar, deixe a opção de duplicatas em **Atualizar** (é a padrão).
 
