@@ -24,21 +24,20 @@ O formato dos casos está em `evals/README.md`.
    - o modo não interativo de um agente pela linha de comando, rodado na pasta (ex.: `claude -p "<pedido>"`, `codex exec "<pedido>"`, `gemini -p "<pedido>"`), se o usuário tiver algum instalado;
    - o usuário: peça que abra uma sessão nova do agente que preferir na pasta e cole o pedido.
 
-   Registre qual agente e qual modelo executaram.
+   Anote qual agente e qual modelo executaram.
 
 4. **Julgue.** Para cada critério do caso, dê uma nota de 0 a 10 e justifique citando um trecho do que o executor produziu. Sem trecho, nota 0. A nota do caso é a média ponderada pelos pesos. Se der, julgue com um agente ou modelo **diferente** do executor e diga qual foi.
 
-5. **Registre** em `evals/<skill>/resultados.md` (crie se não existir) uma linha por caso: data, versão da skill (`git log -1 --format=%h -- skills/<skill>`, mais "+ mudanças locais" se houver), executor, juiz, nota por critério, nota final e mínimo.
-
-6. **Suba a nota, se precisar** (no máximo 3 rodadas):
+5. **Suba a nota, se precisar** (no máximo 3 rodadas):
    - Para cada critério abaixo do mínimo, proponha a **menor** mudança no `SKILL.md` que o resolveria. A mudança tem que ser geral: nunca cite o caso nem os dados dele, senão você ensina a skill a passar no teste, e não a fazer o trabalho.
    - Mostre a mudança e espere a aprovação do usuário (ela mexe em `skills/`; durante uma execução do pipeline, o `npm run guard` barra).
    - Aplique, rode `npm run setup` e volte ao passo 2 com **todos** os casos da skill, não só o que falhou: melhorar um caso pode piorar outro.
 
-7. **Resuma** para o usuário: notas antes e depois, o que mudou e o que continua abaixo do mínimo.
+6. **Resuma na conversa**, sem gravar arquivo de resultado: para cada caso, o executor e o juiz (agente e modelo), a nota por critério com o trecho que a justifica, a nota final e o mínimo; depois, as notas antes e depois de cada rodada, o que mudou no `SKILL.md` e o que continua abaixo do mínimo. O histórico fica no git: os casos em `evals/` e as mudanças em `skills/`.
 
 ## Regras
 
 - Apague as pastas temporárias no fim.
 - Um caso que sempre tira 10 não mede mais nada: sugira um caso mais difícil.
-- Nota dada pelo próprio executor vale menos. Diga isso no registro quando acontecer.
+- Nota dada pelo próprio executor vale menos. Diga isso no resumo quando acontecer.
+- Não grave nada em `evals/` além de casos novos que o usuário aprovar.

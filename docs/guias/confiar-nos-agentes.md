@@ -57,7 +57,7 @@ O relatório de entrega tem a seção **"Trabalho manual"**: o que você preciso
 
 ### 7. Testes para skills (skill `eval-skill` e `evals/`)
 
-Uma skill é código e pode piorar sem ninguém notar. A [`eval-skill`](../../skills/eval-skill/SKILL.md) roda os casos de [`evals/`](../../evals/README.md) num agente sem contexto, numa pasta com nome neutro (agentes mudam quando sabem que estão sendo avaliados), dá nota pelos critérios e, se ficar abaixo do mínimo, propõe e testa melhorias. Executor e juiz podem ser agentes e modelos diferentes; os dois ficam registrados.
+Uma skill é código e pode piorar sem ninguém notar. A [`eval-skill`](../../skills/eval-skill/SKILL.md) roda os casos de [`evals/`](../../evals/README.md) num agente sem contexto, numa pasta com nome neutro (agentes mudam quando sabem que estão sendo avaliados), dá nota pelos critérios e, se ficar abaixo do mínimo, propõe e testa melhorias. Executor e juiz podem ser agentes e modelos diferentes. Os casos ficam em arquivos, porque são o teste que se repete; as notas aparecem só na conversa.
 
 ## O hábito
 
