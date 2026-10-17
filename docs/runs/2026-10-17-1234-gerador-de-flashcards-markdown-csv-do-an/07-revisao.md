@@ -5,18 +5,25 @@ inputs:
   - docs/flow/03-prd.md
   - docs/flow/04-arquitetura.md
   - docs/flow/05-implementacao.md
+  - docs/flow/06-verificacao.md
 ---
 
 # Revisão: Gerador de flashcards Markdown → CSV do Anki
 
 **Veredito:** aprovado (17/17 CAs; 2 observações fora dos critérios de aceite, ver "Observações")
 
-## Testes
+## Testes e fumaça
 ```
+cd workspace && npm run smoke
+fumaça: tudo certo (10 verificações)
+
+cd workspace && npm run typecheck
+(sem erros)
+
 cd workspace && npm test
 ℹ tests 27 · pass 27 · fail 0 · cancelled 0 · skipped 0
 ```
-Também conferido: `npx tsc -p workspace` sem erros (rodado ao fim da fatia 8), e o código de `src/convert.ts`, `src/cli.ts` e `bin/flashcards.ts` lido por inteiro.
+Também conferido: typecheck sem erros (na revisão original com `npx tsc -p workspace` pela raiz; hoje com `npm run typecheck` dentro da pasta, ver [06-verificacao.md](06-verificacao.md)), e o código de `src/convert.ts`, `src/cli.ts` e `bin/flashcards.ts` lido por inteiro.
 
 ## Critérios de aceite
 | CA | Veredito | Evidência |

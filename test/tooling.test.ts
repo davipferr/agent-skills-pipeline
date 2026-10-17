@@ -1,9 +1,18 @@
 import assert from 'node:assert/strict';
 import { describe, it } from 'node:test';
 import { DIAGRAM_END, DIAGRAM_START, replaceDiagram, toMermaid } from '../scripts/lib/diagram.ts';
-import { parseFrontmatter } from '../scripts/lib/files.ts';
+import { flattenProbe, parseFrontmatter } from '../scripts/lib/files.ts';
 import { checkSkill, installCommands, parseManifest, SKILLS_CLI } from '../scripts/lib/skills.ts';
-import { flowOf, step } from './helpers.ts';
+import { flowOf, memProbe, step } from './helpers.ts';
+
+describe('flattenProbe', () => {
+  it('procura docs/flow/* na raiz da pasta, como o archive grava', () => {
+    const probe = flattenProbe(memProbe({ '01-ideia.md': ['ideia', 5] }), 'docs/flow/');
+    assert.equal(probe.read('docs/flow/01-ideia.md'), 'ideia');
+    assert.equal(probe.mtimeMs('docs/flow/01-ideia.md'), 5);
+    assert.equal(probe.read('docs/flow/02-decisoes.md'), null);
+  });
+});
 
 describe('parseFrontmatter', () => {
   it('separa cabeçalho e corpo (inclusive com quebras de linha do Windows)', () => {

@@ -32,6 +32,19 @@ export function diskProbe(root: string): FileProbe {
   };
 }
 
+/**
+ * Faz os caminhos `<prefix>...` do flow.yaml serem procurados na raiz da pasta.
+ * É o formato do `npm run archive`, que guarda `docs/flow/01-ideia.md` como
+ * `docs/runs/<execução>/01-ideia.md`.
+ */
+export function flattenProbe(probe: FileProbe, prefix: string): FileProbe {
+  const strip = (path: string) => (path.startsWith(prefix) ? path.slice(prefix.length) : path);
+  return {
+    read: (path) => probe.read(strip(path)),
+    mtimeMs: (path) => probe.mtimeMs(strip(path)),
+  };
+}
+
 export interface Frontmatter {
   data: Record<string, unknown>;
   body: string;

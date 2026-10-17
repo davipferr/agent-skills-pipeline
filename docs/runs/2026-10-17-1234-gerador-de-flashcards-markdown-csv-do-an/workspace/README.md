@@ -58,5 +58,10 @@ const { csv, cards, warnings } = convert(textoMarkdown, "espanhol");
 ## Testes
 
 ```bash
-npm test
+npm test             # testes unitários e da linha de comando
+npm run smoke        # fumaça: roda o comando como um usuário, com arquivos de verdade
+npm install          # só para o typecheck (typescript e @types/node)
+npm run typecheck
 ```
+
+O mapa de onde está cada funcionalidade e como acioná-la fica em [FEATURE-MAP.md](FEATURE-MAP.md).

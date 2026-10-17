@@ -52,7 +52,7 @@ cd workspace && npm test
 ### 8. Não sobrescrever a fonte — CA-17
 - Testes: `workspace/test/cli.test.ts` › "-o igual à entrada (mesmo caminho | caminho relativo equivalente): não toca no .md, erro citando o caminho e código ≠ 0 (CA-17)"
 - Resultado: 27 passando no total; `npx tsc -p workspace` sem erros
-- Notas: acrescentada depois da revisão (observação 1 de `06-revisao.md`). A checagem roda logo depois de interpretar os argumentos, antes de ler o `.md` (a arquitetura dizia "antes de gravar"; antes de ler também é antes de gravar e evita imprimir avisos à toa). No Windows a comparação ignora maiúsculas. README ganhou uma linha sobre isso.
+- Notas: acrescentada depois da revisão (observação 1 de `07-revisao.md`). A checagem roda logo depois de interpretar os argumentos, antes de ler o `.md` (a arquitetura dizia "antes de gravar"; antes de ler também é antes de gravar e evita imprimir avisos à toa). No Windows a comparação ignora maiúsculas. README ganhou uma linha sobre isso.
 
 ## Em aberto
 - A importação real no Anki não foi testada (os testes conferem o texto do CSV contra o formato documentado do Anki ≥ 2.1.55). Vale importar um arquivo de exemplo uma vez.

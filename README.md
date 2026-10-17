@@ -123,7 +123,7 @@ Quando terminar, `npm run archive` move a execução para `docs/runs/<data>-<ide
 |---------|-----------|
 | `npm run setup` | Instala skills externas + locais para os agentes do `skills.json` (`-- --dry-run` só mostra os comandos) |
 | `npm run validate` | Confere se o fluxo fecha: skills existem, entradas vêm de etapas anteriores, cada arquivo tem um dono, instalação em dia |
-| `npm run status` | Em que etapa você está (`-- --json` para agentes, `-- --dir <pasta>` para outra execução) |
+| `npm run status` | Em que etapa você está (`-- --json` para agentes, `-- --dir <pasta>` para outra execução, inclusive as arquivadas em `docs/runs/`) |
 | `npm run new-skill -- <nome> "<descrição>"` | Cria `skills/<nome>/SKILL.md` no formato do pipeline |
 | `npm run diagram -- --write` | Regenera o diagrama deste README a partir do `flow.yaml` |
 | `npm run archive` | Move a execução atual para `docs/runs/` |

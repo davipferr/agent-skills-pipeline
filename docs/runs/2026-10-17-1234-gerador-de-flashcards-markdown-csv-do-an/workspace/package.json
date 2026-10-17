@@ -11,6 +11,12 @@
     "flashcards": "bin/flashcards.ts"
   },
   "scripts": {
-    "test": "node --test \"test/**/*.test.ts\""
+    "test": "node --test \"test/**/*.test.ts\"",
+    "typecheck": "tsc -p .",
+    "smoke": "node verify/smoke.ts"
+  },
+  "devDependencies": {
+    "@types/node": "24.19.1",
+    "typescript": "5.9.3"
   }
 }
