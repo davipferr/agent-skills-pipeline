@@ -1,0 +1,16 @@
+{
+  "name": "flashcards",
+  "version": "0.1.0",
+  "description": "Transforma anotações em Markdown (pergunta :: resposta) num CSV que o Anki importa.",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22.18.0"
+  },
+  "bin": {
+    "flashcards": "bin/flashcards.ts"
+  },
+  "scripts": {
+    "test": "node --test \"test/**/*.test.ts\""
+  }
+}
