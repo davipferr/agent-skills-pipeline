@@ -3,7 +3,8 @@ step: ship
 skill: ship-report
 inputs:
   - docs/flow/03-prd.md
-  - docs/flow/06-revisao.md
+  - docs/flow/06-verificacao.md
+  - docs/flow/07-revisao.md
 ---
 
 # Entrega: Contador de palavras
@@ -16,6 +17,7 @@ cd workspace
 node src/cli.ts meu-texto.md --top 5
 cat meu-texto.md | node src/cli.ts
 npm test
+npm run smoke
 ```
 
 ## Decisões que importam
@@ -24,7 +26,12 @@ npm test
 - Hífen no meio faz parte da palavra ("pé-de-moleque"): decisão 5
 
 ## Pendências
-- nenhuma
+- `--top abc` imprime as contagens antes do erro (observação 1 de [06-verificacao.md](06-verificacao.md)); vira CA novo se importar.
+
+## Trabalho manual
+| O que um humano precisou fazer (ou ficou sem verificar) | Regra dura que evitaria |
+|----------------------------------------------------------|-------------------------|
+| nenhum | — |
 
 ## Trilha
 1. [01-ideia.md](01-ideia.md): a ideia como chegou
@@ -32,4 +39,5 @@ npm test
 3. [03-prd.md](03-prd.md): escopo e critérios de aceite
 4. [04-arquitetura.md](04-arquitetura.md): módulos e fatias
 5. [05-implementacao.md](05-implementacao.md): o que foi feito, fatia a fatia
-6. [06-revisao.md](06-revisao.md): o veredito contra o PRD
+6. [06-verificacao.md](06-verificacao.md): o programa usado como usuário, com as provas
+7. [07-revisao.md](07-revisao.md): o veredito contra o PRD

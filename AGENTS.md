@@ -11,7 +11,10 @@ Se o usuário descrever uma ideia nova sem mencionar o pipeline, pergunte se ele
 ## Regras do repositório
 
 - As etapas se comunicam **só por arquivos** em `docs/flow/`. Formato: `skills/run-pipeline/references/contrato-dos-artefatos.md`.
-- Código gerado pela etapa de implementação vai em `workspace/`. Não edite `scripts/`, `skills/` ou `flow.yaml` durante uma execução do pipeline.
+- Código gerado pela etapa de implementação vai em `workspace/`. Não edite `scripts/`, `skills/`, `adapters/`, `skills.json` ou `flow.yaml` durante uma execução do pipeline: `npm run guard` falha se isso acontecer.
+- **Regras duras valem mais que instruções.** O que precisa ser garantido vira script, teste ou checagem (`guard`, `validate`, testes, pre-commit); skill é para julgamento. Ao propor uma regra nova, prefira a que faz algo falhar. Veja `docs/guias/confiar-nos-agentes.md`.
+- **Prova é comando + saída.** Não diga que algo funciona sem ter rodado.
+- Quando algo falhar, use a skill `investigate`: reproduzir e ler o código antes de afirmar a causa. As skills de apoio (`helpers` no `flow.yaml`) não são etapas.
 - Ao mudar `flow.yaml`, `skills/` ou `skills.json`: rode `npm run validate`, depois `npm run setup` (as skills locais são **copiadas** para `.claude/skills/` e `.agents/skills/`) e `npm run diagram -- --write`.
 - Antes de concluir mudanças nos scripts: `npm run check` (typecheck + testes + validate).
 - Scripts em TypeScript executado direto pelo Node (≥ 22.18): imports com extensão `.ts`, sem `enum` nem `namespace` (`erasableSyntaxOnly`).

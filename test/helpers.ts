@@ -21,7 +21,7 @@ export function step(partial: Partial<Step> & Pick<Step, 'id'>): Step {
 }
 
 export function flowOf(...steps: Step[]): Flow {
-  return { name: 'teste', description: '', steps };
+  return { name: 'teste', description: '', steps, helpers: [] };
 }
 
 export function skillMd(name: string, body = '', description = `Faz ${name}.`): string {

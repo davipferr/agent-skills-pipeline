@@ -56,7 +56,8 @@ for (const step of status.steps) {
 }
 
 if (status.next === null) {
-  console.log(green('\n  Pipeline concluído. Leia docs/flow/07-entrega.md e rode `npm run archive` para começar outro.\n'));
+  const final = project.flow.steps.at(-1)?.outputs.join(', ') ?? 'o último artefato';
+  console.log(green(`\n  Pipeline concluído. Leia ${final} e rode \`npm run archive\` para começar outro.\n`));
 } else if (status.next.state === 'blocked') {
   console.log(red(`\n  A próxima etapa (${status.next.id}) está bloqueada: ${status.next.reason}. Rode \`npm run validate\`.\n`));
 } else {

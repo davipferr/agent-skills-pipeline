@@ -75,6 +75,13 @@ describe('validateProject', () => {
     assert.match(messages(valid, files).join('\n'), /skills\/segunda mudou desde o último setup/);
   });
 
+  it('helpers: skill de apoio inexistente é erro, e existente não conta como "não usada"', () => {
+    const files = project({ 'skills/apoio/SKILL.md': skillMd('apoio'), '.agents/skills/apoio/SKILL.md': skillMd('apoio') });
+    const withHelper = { ...valid, helpers: ['apoio'] };
+    assert.deepEqual(messages(withHelper, files, [...dirs, 'apoio']), []);
+    assert.match(messages({ ...valid, helpers: ['fantasma'] }).join('\n'), /a skill de apoio `fantasma` não existe/);
+  });
+
   it('avisa quando o SKILL.md não cita a saída que o flow.yaml promete', () => {
     const flow = flowOf(valid.steps[0]!, step({ id: 'dois', skill: 'segunda', inputs: ['a.md'], outputs: ['outro.md'] }));
     assert.match(messages(flow).join('\n'), /não menciona a saída `outro.md`/);

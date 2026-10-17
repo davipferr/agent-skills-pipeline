@@ -5,24 +5,26 @@ inputs:
   - docs/flow/03-prd.md
   - docs/flow/04-arquitetura.md
   - docs/flow/05-implementacao.md
+  - docs/flow/06-verificacao.md
 ---
 
 # Revisão: <nome da feature>
 
 **Veredito:** aprovado | reprovado
 
-## Testes
+## Testes e fumaça
 ```
-<comando rodado e o resumo da saída: quantos passaram/falharam>
+<comandos rodados (testes e fumaça) e o resumo da saída: quantos passaram/falharam>
 ```
 
 ## Critérios de aceite
 | CA | Veredito | Evidência |
 |----|----------|-----------|
-| CA-1 | ✅ | `workspace/test/x.test.ts` › "nome do teste" |
+| CA-1 | ✅ | `workspace/test/x.test.ts` › "nome do teste" · verificação: "<funcionalidade>" |
 
 ## Arquitetura
 - <bate com 04-arquitetura.md? desvios e se estão justificados>
+- Proibições: <cada uma com a checagem que a impõe e se está passando>
 
 ## Escopo extra
 - <nada, ou o que foi feito além do PRD>

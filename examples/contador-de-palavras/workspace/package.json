@@ -2,9 +2,12 @@
   "name": "contador-de-palavras",
   "private": true,
   "type": "module",
-  "engines": { "node": ">=22.18.0" },
+  "engines": {
+    "node": ">=22.18.0"
+  },
   "scripts": {
     "start": "node src/cli.ts",
-    "test": "node --test \"test/**/*.test.ts\""
+    "test": "node --test \"test/**/*.test.ts\"",
+    "smoke": "node verify/smoke.ts"
   }
 }

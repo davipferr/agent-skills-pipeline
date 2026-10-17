@@ -58,7 +58,7 @@ npm run new-skill -- research-topic "..."
 
 ### 5. Adapte o maestro e o final
 
-- Em `skills/run-pipeline/SKILL.md`, troque as menções a `07-entrega.md` pelo seu artefato final.
+- O maestro e o `npm run status` tratam o artefato da **última etapa** do `flow.yaml` como o final; não há nome fixo para trocar.
 - `scripts/archive.ts` usa o título do `01-ideia.md` para nomear a pasta. Se o seu primeiro artefato tiver outro nome, ajuste a leitura do título nesse script.
 
 ### 6. Feche o ciclo
@@ -77,13 +77,28 @@ npm run diagram -- --write
 
 ## Levar o mecanismo para outro repositório
 
-Copie para o outro projeto:
+Num projeto novo, comece por uma cópia deste repositório. Num projeto que **já existe**, rode a partir daqui:
 
-```
-flow.yaml  skills.json  skills/  adapters/  scripts/  tsconfig.json
+```bash
+npm run adopt -- ../meu-projeto --dry-run
 ```
 
-Junte ao `package.json` dele os `scripts` e as dependências (`yaml`, e `typescript` + `@types/node` como dev). Depois acrescente ao `AGENTS.md`/`CLAUDE.md` do projeto a seção "Quando o usuário pedir para rodar o pipeline" deste repositório.
+```bash
+npm run adopt -- ../meu-projeto
+```
+
+O `adopt`:
+
+| Leva | Como |
+|------|------|
+| `skills/`, `adapters/` | copia (e atualiza, se rodar de novo) |
+| scripts do pipeline | em `scripts/pipeline/`, para não misturar com os scripts do projeto |
+| `flow.yaml`, `skills.json`, `.githooks/pre-commit`, `evals/` | só se o projeto ainda não tiver: depois disso, são dele |
+| `package.json` | acrescenta os scripts (`setup`, `status`, `validate`, `guard`...), `yaml` como devDependency e `engines.node`; **nunca sobrescreve** o que já existe, e lista os conflitos |
+| `AGENTS.md` | uma seção entre marcadores, atualizada a cada `adopt`; inclui a regra "neste projeto não há `workspace/`: o código é a raiz do repositório" |
+| `CLAUDE.md`, `.gitignore` | `@AGENTS.md` e as pastas instaladas pelo setup, se faltarem |
+
+Depois, no projeto: `npm install`, `npm run setup` e `npm run validate`. Para atualizar o projeto quando este template evoluir, rode o `adopt` de novo: o que é do projeto (fluxo, manifesto, scripts e regras próprias) fica como está.
 
 ## Princípios que valem para qualquer fluxo
 
@@ -91,3 +106,4 @@ Junte ao `package.json` dele os `scripts` e as dependências (`yaml`, e `typescr
 2. **Etapas que precisam de humano são explícitas** (`interactive: true`). O maestro para nelas.
 3. **A última etapa é para quem não acompanhou.** Ninguém vai ler os seis artefatos do meio.
 4. **Determinístico em script, julgamento em skill.** Contar arquivos, comparar datas e validar YAML é com código; decidir escopo e escrever é com o agente.
+5. **Alguma etapa prova que funciona antes de alguém aprovar.** No fluxo de exemplo é a `verify`; num fluxo de blog seria abrir o post renderizado e checar os links. Veja [Confiar nos agentes](confiar-nos-agentes.md).

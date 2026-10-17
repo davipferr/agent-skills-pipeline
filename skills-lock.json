@@ -12,37 +12,57 @@
       "skillPath": "skills/engineering/codebase-design/SKILL.md",
       "computedHash": "fb1d8ab98ad151551eeade003e3ae55a46578a380fd9fc3ed4dbf9c2fbce0a9f"
     },
+    "eval-skill": {
+      "source": ".",
+      "sourceType": "local",
+      "computedHash": "b39dcd5fc184a50f97cac16fa0c29bf9498a9f9680b387121a7f44d1e42c038a"
+    },
     "grilling": {
       "source": "mattpocock/skills",
       "sourceType": "github",
       "skillPath": "skills/productivity/grilling/SKILL.md",
       "computedHash": "c3b3e67f18495984385413bc6be7e2acbf2139c6cf52ef42abdda7242a791822"
     },
+    "harden": {
+      "source": ".",
+      "sourceType": "local",
+      "computedHash": "cb5f2f79ede7ac9bfe07366385e9b005d8962b3afc40fd23fa99d4609864d833"
+    },
+    "investigate": {
+      "source": ".",
+      "sourceType": "local",
+      "computedHash": "e4f1ea89a4b5ac7885199167f4dbda8f8e022f2e5231fd9cdfb51be4893a4d0a"
+    },
     "plan-architecture": {
       "source": ".",
       "sourceType": "local",
-      "computedHash": "ebbb716723116af70bd958c006542bb2835d4e87488821779db5753289805411"
+      "computedHash": "69b96869c52c9ddba8d9200ccc43dc6816c5374724bda9f03f77f2039949c696"
     },
     "review-against-prd": {
       "source": ".",
       "sourceType": "local",
-      "computedHash": "809ff93610c39fd82bf756fca3eb3a477fd90d6e8889ee7eb3099db4b13547e9"
+      "computedHash": "8fc507a10daea5c18d006b1978022df6ad39b64bf7bc09704e908e4f52c379ef"
     },
     "run-pipeline": {
       "source": ".",
       "sourceType": "local",
-      "computedHash": "6ae80f9a288ad2e8f5dcda0abc960c0104b1d40e1c98c689ba0010aadf06e85e"
+      "computedHash": "9a6212a163a363e97e801d85e63fb13886483287b9046f49f5bf07fe536c0f1f"
     },
     "ship-report": {
       "source": ".",
       "sourceType": "local",
-      "computedHash": "b1ef5e82642e527fc7a2a770ded3aa1c7144d2dfa9185932a3e05848c0009e54"
+      "computedHash": "903ba250d5fa8dac0cf97203922c374c5c02742b3663fb98d14029031ef7722e"
     },
     "tdd": {
       "source": "mattpocock/skills",
       "sourceType": "github",
       "skillPath": "skills/engineering/tdd/SKILL.md",
       "computedHash": "535d1a6f3bd5bded8971e7e4ea76538907cbff6b6d32c39cf97b669869dcd383"
+    },
+    "verify": {
+      "source": ".",
+      "sourceType": "local",
+      "computedHash": "108542282d307fc229599eddf4514955ec2abf7060f4d0bfd51f7a13a18fed9d"
     },
     "write-prd": {
       "source": ".",

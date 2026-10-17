@@ -29,6 +29,11 @@ workspace/
 └── test/
 ```
 
+## Proibições
+| Proibição | Por quê | Como é imposta (teste, lint, script) |
+|-----------|---------|--------------------------------------|
+| <ex.: `src/core` não importa `src/cli`> | <ex.: o núcleo precisa rodar sem terminal> | <ex.: `test/arquitetura.test.ts` lê os imports e falha> |
+
 ## Fatias (ordem de implementação)
 1. **<nome da fatia>** — cobre CA-1. Pronto quando: <...>
 2. **<...>** — cobre CA-2, CA-3. Pronto quando: <...>

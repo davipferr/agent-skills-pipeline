@@ -26,7 +26,7 @@ Por isso a **`description` é a parte mais importante**: é ela que faz a skill 
 
 ## 2. Por que encadear skills por arquivos
 
-Dava para escrever uma skill gigante "transforma ideia em feature". Este projeto separa em sete porque:
+Dava para escrever uma skill gigante "transforma ideia em feature". Este projeto separa em oito porque:
 
 - **Cada skill faz uma coisa.** `write-prd` não sabe programar; `tdd` não sabe escrever PRD. Fica fácil trocar uma etapa sem mexer nas outras.
 - **Dá para reaproveitar skills de terceiros.** `grilling` e `tdd` vêm do skills.sh, prontas e testadas por milhares de pessoas.
@@ -71,22 +71,22 @@ As regras que o `npm run validate` garante:
 | `ready` | não tem saída, mas tem todas as entradas |
 | `blocked` | falta entrada |
 
-Consequência prática: **editou o PRD à mão? A arquitetura, a implementação, a revisão e a entrega ficam `stale`.** O maestro avisa e pergunta se você quer refazer.
+Consequência prática: **editou o PRD à mão? A arquitetura, a implementação, a verificação, a revisão e a entrega ficam `stale`.** O maestro avisa e pergunta se você quer refazer.
 
 ## 5. O maestro (`run-pipeline`)
 
 A skill [`run-pipeline`](../../skills/run-pipeline/SKILL.md) faz o loop:
 
 ```
-┌─► npm run status -- --json ──► next == null? ──► fim (mostra 07-entrega.md)
+┌─► npm run status -- --json ──► next == null? ──► fim (mostra o último artefato)
 │              │
 │              ▼
 │   lê a etapa no flow.yaml (skill, inputs, outputs, adapter)
 │              │
 │              ▼
-│   lê os inputs ──► chama a skill (+ adapter) ──► confere os outputs
+│   lê os inputs ──► chama a skill (+ adapter) ──► confere os outputs ──► npm run guard
 │              │
-└── usuário diz "continua" ◄── para e reporta
+└── usuário diz "continua" ◄── para e reporta (reprovado? volta para implement)
 ```
 
 Ela **pergunta ao script** em vez de deduzir sozinha. LLMs são bons em seguir instruções e ruins em contar arquivos e comparar datas com precisão. O script faz a parte determinística e a skill faz a parte de julgamento.
@@ -111,3 +111,15 @@ skills/write-prd/            ← você edita aqui (fonte)
 ```
 
 As skills externas fazem o mesmo caminho, só que a fonte é o GitHub. O `skills-lock.json` registra o hash de cada uma para você saber exatamente qual versão rodou.
+
+## 8. Skills de apoio (`helpers`)
+
+Nem toda skill é uma etapa. As listadas em `helpers:` no `flow.yaml` não têm ordem nem artefato próprio: etapas as chamam, ou você as chama direto.
+
+| Skill | Quando |
+|-------|--------|
+| [`investigate`](../../skills/investigate/SKILL.md) | algo falhou: reproduz e lê o código antes de afirmar a causa |
+| [`harden`](../../skills/harden/SKILL.md) | depois das entregas: transforma o "Trabalho manual" em regras duras |
+| [`eval-skill`](../../skills/eval-skill/SKILL.md) | para testar uma skill com casos de `evals/` e nota |
+
+O `validate` confere se elas existem e não as acusa como "não usadas". Por que elas existem está em [Confiar nos agentes](confiar-nos-agentes.md).

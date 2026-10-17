@@ -16,11 +16,12 @@ A próxima etapa usa a skill `tdd`, que trabalha em **fatias verticais** (um tes
 2. Escolha a **menor** arquitetura que atende os critérios de aceite. Respeite as "Restrições técnicas" do PRD. Não adicione camada, banco ou framework que nenhum CA exige.
 3. Defina os **módulos** (nome, responsabilidade em uma frase, interface pública). Poucos módulos, com bastante coisa escondida atrás de uma interface pequena.
 4. Defina as **interfaces a testar**: onde os testes observam o comportamento. Para cada uma: o que o teste pega e o que deixa passar.
-5. Quebre em **fatias**. Cada fatia:
+5. Defina as **proibições**: o que, se um agente fizer por pressa, estraga o projeto. Agentes pegam o caminho mais curto; a arquitetura deve fazer o caminho mais curto ser o certo. Exemplos: "o módulo `core` não importa nada de `cli`", "nenhum acesso a disco fora de `io.ts`", "sem dependência nova sem motivo no PRD". Para cada proibição, diga **como ela é imposta automaticamente** (um teste que falha, uma regra de lint, um script). Proibição sem imposição não entra: vira só conselho, e conselho o agente esquece. Prefira poucas proibições que importam a muitas genéricas.
+6. Quebre em **fatias**. Cada fatia:
    - cobre um ou mais CAs do PRD (cite os ids),
    - atravessa todas as camadas necessárias (não "fazer todo o banco primeiro"),
    - termina com algo que roda.
-6. Escreva `docs/flow/04-arquitetura.md` a partir de [template.md](template.md), com o cabeçalho:
+7. Escreva `docs/flow/04-arquitetura.md` a partir de [template.md](template.md), com o cabeçalho:
 
    ```yaml
    step: architecture
@@ -28,8 +29,10 @@ A próxima etapa usa a skill `tdd`, que trabalha em **fatias verticais** (um tes
    inputs: [docs/flow/03-prd.md]
    ```
 
-7. Confira a cobertura: todo `CA-n` do PRD aparece em pelo menos uma fatia. Se algum ficou de fora, explique em "Em aberto".
+8. Confira a cobertura: todo `CA-n` do PRD aparece em pelo menos uma fatia. Se algum ficou de fora, explique em "Em aberto".
 
 ## Onde fica o código
 
 O código da feature vai em `workspace/` (ignorado pelo git deste repositório: é o produto da execução, não parte do pipeline). Diga na seção "Estrutura" como `workspace/` vai ficar organizado.
+
+Organize por **funcionalidade**, não por tipo de arquivo: tudo de uma funcionalidade junto, numa pasta. Assim o agente que mexer nela acha tudo num lugar só e não espalha mudanças. `workspace/` precisa funcionar sozinho (sem herdar configuração da pasta de cima): a etapa `verify` roda uma cópia dela fora do repositório.

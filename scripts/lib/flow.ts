@@ -18,6 +18,8 @@ export interface Flow {
   name: string;
   description: string;
   steps: Step[];
+  /** Skills locais de apoio: chamadas por etapas ou pelo usuário, sem ordem nem artefato próprio. */
+  helpers: string[];
 }
 
 export const FLOW_FILE = 'flow.yaml';
@@ -42,6 +44,7 @@ export function parseFlow(text: string): { flow: Flow | null; issues: Issue[] } 
   }
   const doc = raw as Record<string, unknown>;
   if (typeof doc.name !== 'string') issues.push(error(FLOW_FILE, '`name` é obrigatório'));
+  if (doc.helpers !== undefined && !isStringArray(doc.helpers)) issues.push(error(FLOW_FILE, '`helpers` precisa ser uma lista de nomes de skills'));
   if (!Array.isArray(doc.steps) || doc.steps.length === 0) {
     issues.push(error(FLOW_FILE, '`steps` precisa ser uma lista com pelo menos uma etapa'));
     return { flow: null, issues };
@@ -74,7 +77,12 @@ export function parseFlow(text: string): { flow: Flow | null; issues: Issue[] } 
 
   if (issues.length > 0) return { flow: null, issues };
   return {
-    flow: { name: doc.name as string, description: typeof doc.description === 'string' ? doc.description : '', steps },
+    flow: {
+      name: doc.name as string,
+      description: typeof doc.description === 'string' ? doc.description : '',
+      steps,
+      helpers: isStringArray(doc.helpers) ? doc.helpers : [],
+    },
     issues,
   };
 }

@@ -8,8 +8,12 @@
 // O CLI COPIA as skills locais para .agents/skills/ (e cria um link em
 // .claude/skills/). Por isso, depois de editar algo em skills/, rode o setup de novo.
 // O `npm run validate` avisa quando a cópia instalada ficou para trás.
+//
+// Também liga o hook de pre-commit de .githooks/ (git config core.hooksPath).
 
 import { spawnSync } from 'node:child_process';
+import { existsSync } from 'node:fs';
+import { join } from 'node:path';
 import { parseArgs } from 'node:util';
 import { loadProject, printIssues, bold, dim, green, red } from './lib/project.ts';
 import { installCommands, listLocalSkillDirs } from './lib/skills.ts';
@@ -44,6 +48,19 @@ for (const command of commands) {
   if (result.status !== 0) {
     console.error(red(`\nFalhou: ${command.label}. Veja a saída acima.`));
     process.exit(result.status ?? 1);
+  }
+}
+
+// Liga o hook de pre-commit versionado em .githooks/ (regras duras antes de cada commit).
+// Não mexe se o projeto já usa outro lugar para hooks (ex.: husky).
+const git = (...args: string[]) => spawnSync('git', args, { cwd: project.root, encoding: 'utf8' });
+if (!values['dry-run'] && existsSync(join(project.root, '.githooks', 'pre-commit')) && git('rev-parse', '--git-dir').status === 0) {
+  const current = git('config', '--get', 'core.hooksPath').stdout.trim();
+  if (current === '') {
+    git('config', 'core.hooksPath', '.githooks');
+    console.log(green('\n✔ hook de pre-commit ativado (.githooks/pre-commit roda `npm run precommit`)'));
+  } else if (current !== '.githooks') {
+    console.log(dim(`\nOs hooks do git já apontam para ${current}: chame \`npm run precommit\` no seu pre-commit.`));
   }
 }
 

@@ -23,7 +23,8 @@ inputs:                        # arquivos lidos para produzi-lo
 2. **Autossuficiente.** Quem lê o artefato não teve acesso à sua conversa. Se uma decisão importa, ela está escrita aqui.
 3. **Referencie, não copie.** Se a informação já está num artefato anterior, cite o arquivo em vez de repetir o conteúdo.
 4. **Pendências explícitas.** O que ficou em aberto vai numa seção `## Em aberto`, nunca fica implícito.
-5. **Trabalho pela metade.** Uma etapa longa (como a implementação) pode gravar o artefato aos poucos. Enquanto não terminar, o cabeçalho leva `status: in-progress`; quando terminar, a linha é removida.
+5. **Prova, não afirmação.** Quando o artefato diz que algo funciona, ele mostra o que prova isso: o comando rodado e um trecho da saída real, ou o teste (arquivo e nome).
+6. **Trabalho pela metade.** Uma etapa longa (como a implementação) pode gravar o artefato aos poucos. Enquanto não terminar, o cabeçalho leva `status: in-progress`; quando terminar, a linha é removida.
 
 ## Como o estado é calculado
 

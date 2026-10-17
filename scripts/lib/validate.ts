@@ -98,8 +98,15 @@ export function validateProject(flow: Flow, manifest: Manifest, localDirs: strin
     }
   }
 
-  // 3. Instalação: as skills que o fluxo usa estão onde os agentes procuram?
-  const needed = new Set<string>([ORCHESTRATOR, ...flow.steps.map((s) => s.skill)]);
+  // 3. Skills de apoio (helpers) precisam existir em skills/.
+  for (const helper of flow.helpers) {
+    if (!local.has(helper)) {
+      issues.push(error(`${FLOW_FILE} › helpers`, `a skill de apoio \`${helper}\` não existe em ${LOCAL_SKILLS_DIR}/. Crie com: npm run new-skill -- ${helper}`));
+    }
+  }
+
+  // 4. Instalação: as skills que o fluxo usa estão onde os agentes procuram?
+  const needed = new Set<string>([ORCHESTRATOR, ...flow.steps.map((s) => s.skill), ...flow.helpers.filter((h) => local.has(h))]);
   for (const name of needed) {
     const installed = readInstalled(probe, name);
     const source = local.get(name);
@@ -110,10 +117,10 @@ export function validateProject(flow: Flow, manifest: Manifest, localDirs: strin
     }
   }
 
-  // 4. Skills locais que ninguém usa.
+  // 5. Skills locais que ninguém usa.
   for (const dir of local.keys()) {
-    if (dir !== ORCHESTRATOR && !flow.steps.some((s) => s.source === 'local' && s.skill === dir)) {
-      issues.push(warning(`${LOCAL_SKILLS_DIR}/${dir}`, 'skill local não usada em nenhuma etapa do flow.yaml'));
+    if (dir !== ORCHESTRATOR && !flow.helpers.includes(dir) && !flow.steps.some((s) => s.source === 'local' && s.skill === dir)) {
+      issues.push(warning(`${LOCAL_SKILLS_DIR}/${dir}`, 'skill local não usada em nenhuma etapa nem em `helpers` do flow.yaml'));
     }
   }
 
