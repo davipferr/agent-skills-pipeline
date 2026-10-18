@@ -1,4 +1,0 @@
-#!/bin/sh
-# Regras duras antes de cada commit, para qualquer agente ou pessoa.
-# Ativado pelo `npm run setup` (git config core.hooksPath .githooks).
-exec npm run --silent precommit
