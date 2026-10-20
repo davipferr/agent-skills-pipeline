@@ -86,28 +86,45 @@ A regra é uma só: **a base vai inteira, o produto não vai.**
 
 Nada do pipeline entra no código do projeto nem no `package.json` dele: os comandos rodam com `npm --prefix pipeline run <comando>`, com as dependências do próprio `pipeline/`.
 
-### Projeto novo
-
-Comece por uma cópia deste repositório e apague os produtos que vieram junto (o conteúdo de `docs/runs/` e de `docs/flow/`, e `workspace/` se existir). O código vai para `workspace/` (`code: workspace` no `pipeline/flow.yaml`).
+Quem leva a base é um comando, não um agente seguindo um checklist: um agente que só "olha a estrutura" deste repositório monta uma versão mais leve e deixa de fora o que garante a qualidade (verify, investigate, guard, o mapa). Foi o que aconteceu antes deste comando existir.
 
 ### Projeto que já existe
 
-Faça conversando com o agente, aberto no projeto de destino. Um pedido que funciona:
+Na pasta do projeto, rode o `adopt` **deste** repositório (troque o caminho pelo da sua máquina):
 
-> Quero usar o pipeline de skills de `<caminho deste repositório>` neste projeto. Siga a seção "Levar o pipeline para outro repositório" do guia `pipeline/guias/montar-seu-fluxo.md` de lá. Antes de gravar, me mostre o que vai copiar e o que vai mudar no que já existe.
+```bash
+npm --prefix C:/Users/davip/Documents/projetos/js/agent-skills-pipeline/pipeline run adopt -- . --dry-run
+```
 
-O agente deve seguir esta lista, nessa ordem:
+O `--dry-run` mostra o que vai ser copiado e o que muda no que já existe, sem gravar. Sem ele, o `adopt`:
 
-1. **Copiar a pasta `pipeline/`** para a raiz do projeto, sem `node_modules/`. Se o projeto já tiver uma pasta `pipeline/`, parar e perguntar ao dono (o nome da pasta está em `PIPELINE_DIR`, em `pipeline/scripts/lib/files.ts`).
-2. **Apontar `code` para o código do projeto** no `pipeline/flow.yaml`: `code: .` (o repositório inteiro) ou a pasta onde o código mora (ex.: `code: apps/web`). O `validate` recusa `code` dentro de `pipeline/` ou de `docs/`, e o `archive` não move o código quando `code` é `.`.
-3. **Juntar o bloco do pipeline ao `AGENTS.md`** do projeto: o trecho entre `<!-- pipeline:start -->` e `<!-- pipeline:end -->` do `AGENTS.md` daqui, sem apagar o que já existe. Se o projeto usa Claude Code, o mesmo com o `CLAUDE.md`, que precisa começar com `@AGENTS.md`.
-4. **Acrescentar ao `.gitignore`**: `.claude/skills/`, `.agents/skills/` e `pipeline/node_modules/`.
-5. **Hook de pre-commit**: o `setup` liga `pipeline/githooks/` se o projeto não usa outro lugar para hooks. Se usa (ex.: husky), acrescentar `npm --prefix pipeline run precommit` no pre-commit dele.
-6. Rodar `npm --prefix pipeline install`, `npm --prefix pipeline run setup` e `npm --prefix pipeline run check`, e mostrar a saída.
+1. copia `pipeline/` inteira, sem `node_modules/`, e para se o projeto já tiver uma pasta `pipeline/`;
+2. põe `code: .` no `pipeline/flow.yaml` (ou a pasta de `--code`, ex.: `--code apps/web`);
+3. junta o bloco do pipeline ao `AGENTS.md` e ao `CLAUDE.md` do projeto, sem apagar o que já existe (o `CLAUDE.md` passa a começar com `@AGENTS.md`), e acrescenta ao `.gitignore` o que falta;
+4. passa as skills do skills.sh que o projeto já tinha (o `skills-lock.json` da raiz) para o `pipeline/skills.json`, e lista as skills soltas em `.claude/skills/` e `.agents/skills/`;
+5. roda `npm --prefix pipeline install`, `npm --prefix pipeline run setup` (instala as skills e liga o pre-commit) e `npm --prefix pipeline run validate` no projeto.
+
+Depois, abra o agente no projeto e diga:
+
+> Faça o onboard do pipeline.
+
+A skill [`onboard`](../skills/onboard/SKILL.md) escreve o `docs/FEATURE-MAP.md` do código que já existe e usa a `find-skills` para procurar no skills.sh as skills que servem para a stack do projeto (com a sua aprovação). Até ela terminar, o `validate` falha e o `status` bloqueia todas as etapas, então não dá para pular. Aí é só "rode o pipeline".
+
+Se o projeto usa outro lugar para os hooks do git (ex.: husky), o `setup` avisa: acrescente `npm --prefix pipeline run precommit` no pre-commit dele.
+
+### Projeto novo
+
+Ou comece por uma cópia deste repositório e apague os produtos que vieram junto (o conteúdo de `docs/runs/` e de `docs/flow/`, e `workspace/` se existir), ou rode o `adopt` numa pasta vazia com `--code workspace`. O código vai para `workspace/` e o mapa de cada execução fica no `05-implementacao.md` (não há onboard: não há código anterior).
 
 ### Atualizar um projeto quando este template evoluir
 
-Peça o mesmo, dizendo que é uma atualização. O agente troca `pipeline/` pela versão nova e preserva o que é do projeto dentro dela: o `flow.yaml` (o `code` e as etapas que você mudou), o `skills.json`, as skills e os casos de `evals/` que só existem lá e o `endurecimento.md`. No `AGENTS.md` e no `CLAUDE.md`, troca só o que está entre os marcadores. No fim, roda `npm --prefix pipeline run check`.
+Na pasta do projeto:
+
+```bash
+npm --prefix C:/Users/davip/Documents/projetos/js/agent-skills-pipeline/pipeline run adopt -- . --update --dry-run
+```
+
+O `--update` troca a base pela versão nova e preserva o que é do projeto dentro dela: o `flow.yaml`, o `skills.json`, o `endurecimento.md` e as skills e os casos de `evals/` que só existem lá. Apaga os arquivos da base que saíram do template. No `AGENTS.md` e no `CLAUDE.md`, troca só o que está entre os marcadores. Se o template ganhou etapas ou `helpers` novos, compare o `flow.yaml` do projeto com o daqui e traga o que quiser à mão. No fim, rode `npm --prefix pipeline run check`.
 
 ## Princípios que valem para qualquer fluxo
 

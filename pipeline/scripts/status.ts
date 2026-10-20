@@ -1,7 +1,7 @@
 // npm --prefix pipeline run status [-- --json] [-- --dir <pasta>] [-- --ignore-time]
 //
-// Mostra em que etapa o pipeline está. A skill run-pipeline chama este script
-// com --json para decidir o que fazer, em vez de adivinhar olhando os arquivos.
+// Mostra em que etapa o pipeline está e, num projeto que já existia, se falta o onboard.
+// A skill run-pipeline chama este script com --json para decidir o que fazer, em vez de adivinhar olhando os arquivos.
 // --dir lê os artefatos de outra pasta, usando o pipeline/flow.yaml. Aceita os dois
 // formatos: com docs/flow/ dentro (um repositório inteiro) ou com os artefatos
 // soltos, como o archive grava (docs/runs/<execução>).
@@ -10,6 +10,7 @@ import { existsSync } from 'node:fs';
 import { join } from 'node:path';
 import { parseArgs } from 'node:util';
 import { diskProbe, flattenProbe, FLOW_DIR, userPath, type FileProbe } from './lib/files.ts';
+import { onboardProblems } from './lib/onboard.ts';
 import { computeStatus, type StepState } from './lib/status.ts';
 import { loadProject, printIssues, bold, cyan, dim, green, red, yellow } from './lib/project.ts';
 
@@ -28,7 +29,9 @@ const FLOW_PREFIX = `${FLOW_DIR}/`;
 // Execução arquivada: artefatos soltos na pasta, sem docs/flow/ dentro.
 const flat = values.dir !== undefined && !existsSync(join(userPath(values.dir), FLOW_DIR));
 const probe = values.dir ? withLayout(diskProbe(userPath(values.dir))) : project.probe;
-const status = computeStatus(project.flow, probe, { ignoreTime: values['ignore-time'] });
+// Uma execução arquivada não depende do onboard: ele é do projeto, não da execução.
+const onboard = values.dir ? [] : onboardProblems(project.flow, project.probe);
+const status = computeStatus(project.flow, probe, { ignoreTime: values['ignore-time'], onboard });
 
 if (values.json) {
   console.log(JSON.stringify(status, null, 2));
@@ -64,7 +67,10 @@ for (const step of status.steps) {
   );
 }
 
-if (status.next === null) {
+if (status.onboard !== null) {
+  console.log(red(`\n  Antes da primeira execução: ${status.onboard}.`));
+  console.log(`  Próximo passo: peça ao agente ${bold('"faça o onboard do pipeline"')} (skill onboard).\n`);
+} else if (status.next === null) {
   const final = project.flow.steps.at(-1)?.outputs.map(location).join(', ') ?? 'o último artefato';
   const archive = values.dir ? '' : ' e rode `npm --prefix pipeline run archive` para começar outro';
   console.log(green(`\n  Pipeline concluído. Leia ${final}${archive}.\n`));

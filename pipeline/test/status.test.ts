@@ -120,3 +120,16 @@ describe('veredito (on_reject)', () => {
     assert.equal(verdictOf('sem veredito'), null);
   });
 });
+
+describe('computeStatus com onboard pendente', () => {
+  it('bloqueia toda etapa que não está pronta e diz o que falta', () => {
+    const status = computeStatus(flow, memProbe({ 'a.md': [art('a'), 1] }), { onboard: ['falta o docs/FEATURE-MAP.md'] });
+    assert.deepEqual(status.steps.map((s) => s.state), ['done', 'blocked', 'blocked']);
+    assert.equal(status.onboard, 'falta o docs/FEATURE-MAP.md');
+    assert.match(status.next?.reason ?? '', /skill onboard/);
+  });
+
+  it('sem pendência, onboard é null', () => {
+    assert.equal(computeStatus(flow, memProbe({})).onboard, null);
+  });
+});

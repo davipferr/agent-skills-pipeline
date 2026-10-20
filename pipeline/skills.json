@@ -6,6 +6,11 @@
       "source": "mattpocock/skills",
       "skills": ["grilling", "tdd", "codebase-design"],
       "why": "grilling: interrogatório da ideia. tdd: implementação em fatias vermelho→verde. codebase-design: vocabulário que o tdd consulta."
+    },
+    {
+      "source": "vercel-labs/skills",
+      "skills": ["find-skills"],
+      "why": "find-skills: a skill onboard a usa para achar no skills.sh as skills que servem para a stack de cada projeto."
     }
   ]
 }

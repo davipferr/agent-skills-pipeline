@@ -9,7 +9,7 @@ O erro mais caro de um agente é **afirmar uma causa que ele não verificou**: "
 
 ## Passos
 
-1. **Reproduza antes de tudo.** Use o "Mapa de funcionalidades" de `docs/flow/05-implementacao.md` (ou de `docs/runs/<execução>/05-implementacao.md`, numa execução arquivada; ou o README do projeto) para saber como acionar a funcionalidade. Escreva os passos mínimos que fazem o problema acontecer e rode-os. Guarde a saída real.
+1. **Reproduza antes de tudo.** Use o mapa do projeto, `docs/FEATURE-MAP.md` (num projeto que já existia), ou o "Mapa de funcionalidades" de `docs/flow/05-implementacao.md` (ou de `docs/runs/<execução>/05-implementacao.md`, numa execução arquivada; ou o README do projeto) para saber como acionar a funcionalidade. Escreva os passos mínimos que fazem o problema acontecer e rode-os. Guarde a saída real.
    - Relato vago? Use o mapa para chegar à tela ou ao comando mais provável e tente reproduzir. Se não conseguir, diga exatamente o que tentou; não invente o bug.
    - Não reproduziu? Pare aqui e reporte "não reproduzido", com o que foi tentado. Não "corrija" algo que você não viu falhar.
 

@@ -16,6 +16,7 @@
     "diagram": "node scripts/diagram.ts",
     "archive": "node scripts/archive.ts",
     "guard": "node scripts/guard.ts",
+    "adopt": "node scripts/adopt.ts",
     "typecheck": "tsc",
     "test": "node --test \"test/**/*.test.ts\"",
     "check": "npm run typecheck && npm test && npm run validate && npm run guard",

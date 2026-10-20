@@ -2,7 +2,7 @@
 
 O mapa da base: cada comando e cada skill, onde estão no código e qual teste os cobre. Um agente que for mexer no pipeline começa por aqui, em vez de adivinhar. Caminhos a partir de `pipeline/`. Atualize este arquivo sempre que um comando ou uma skill mudar (`test/feature-map.test.ts` falha se faltar algum).
 
-O mapa de cada **projeto gerado** não fica aqui: ele é uma seção do `docs/flow/05-implementacao.md` daquela execução.
+O mapa de cada **projeto gerado** não fica aqui: ele é uma seção do `docs/flow/05-implementacao.md` daquela execução. Num projeto que **já existia**, o mapa do código fica em `docs/FEATURE-MAP.md` daquele projeto (skill `onboard`).
 
 ## Instalar e rodar
 - Requisitos: Node.js ≥ 22.18 (os scripts são TypeScript rodando direto no Node, sem build)
@@ -25,6 +25,8 @@ O mapa de cada **projeto gerado** não fica aqui: ele é uma seção do `docs/fl
 | Criar uma skill | `npm --prefix pipeline run new-skill -- <nome> "<descrição>"` | `scripts/new-skill.ts` | — |
 | Diagrama do fluxo no README | `npm --prefix pipeline run diagram [-- --write]` | `scripts/diagram.ts` › `lib/diagram.ts` › `toMermaid`, `replaceDiagram` | `test/tooling.test.ts` › "diagrama" |
 | Arquivar uma execução | `npm --prefix pipeline run archive [-- --dry-run]` | `scripts/archive.ts` | — |
+| Levar a base para outro projeto (ou atualizá-la lá) | `npm --prefix pipeline run adopt -- <pasta> [--update] [--code <pasta>] [--dry-run] [--skip-install]` | `scripts/adopt.ts` › `lib/adopt.ts` › `copyPlan`, `upsertBlock`, `externalFromLock`, `mergeExternal` | `test/adopt.test.ts` (inclui o script de verdade numa pasta temporária) |
+| Exigir o onboard num projeto que já existia | automático no `validate` (erro) e no `status` (todas as etapas `blocked`, `onboard` no JSON) quando `code` não é `workspace` e falta o `docs/FEATURE-MAP.md` com as seções certas | `lib/onboard.ts` › `onboardProblems`, `PROJECT_MAP`; `lib/validate.ts`; `lib/status.ts` | `test/validate.test.ts` › "onboard", `test/status.test.ts` › "onboard pendente" |
 | Checagem completa | `npm --prefix pipeline run check` (o hook `githooks/pre-commit` roda `npm --prefix pipeline run precommit`, que chama este) | `package.json`, `githooks/pre-commit` | `test/guard.test.ts` › "a cadeia de checagens" |
 | Typecheck | `npm --prefix pipeline run typecheck` | `tsconfig.json` | — |
 | Testes | `npm --prefix pipeline test` | `test/` | `test/feature-map.test.ts` (este mapa), `test/project.test.ts` › "instruções do pipeline" (os guias e skills só citam comandos que existem) |
@@ -40,6 +42,7 @@ O mapa de cada **projeto gerado** não fica aqui: ele é uma seção do `docs/fl
 | Investigar uma falha | pedir "investigue ..." | `skills/investigate/SKILL.md` | — |
 | Transformar trabalho manual em regra | pedir "endureça" | `skills/harden/SKILL.md`; registro em `endurecimento.md` | — |
 | Avaliar uma skill | pedir "avalie a skill <nome>" | `skills/eval-skill/SKILL.md`, casos em `evals/` | — |
+| Preparar um projeto que já existia (mapa do código + skills da stack com a `find-skills`) | pedir "faça o onboard do pipeline", ou o `status` pede | `skills/onboard/SKILL.md`, `skills/onboard/template.md`; `find-skills` vem de `vercel-labs/skills` no `skills.json` | o `validate` (acima) confere o resultado |
 
 ## Entradas e saídas
 - Entrada do pipeline: a ideia, numa conversa com o agente.
@@ -53,4 +56,6 @@ O mapa de cada **projeto gerado** não fica aqui: ele é uma seção do `docs/fl
 - `status` com etapa `fora do contrato` → o artefato não tem o cabeçalho certo ou (em `verify`/`review`) a linha `**Veredito:**`; refaça a etapa.
 - `status` com etapa `reprovada` → volte para a etapa do `redo` (normalmente `implement`) com as falhas do artefato.
 - `test/feature-map.test.ts` falhando → um comando, script ou skill novo não está neste mapa.
+- `validate` com erro em `docs/FEATURE-MAP.md` (ou `status` com tudo bloqueado por "falta o onboard") → projeto que já existia sem o mapa do código: peça a skill `onboard`.
+- `adopt` dizendo que `pipeline/` já existe → o projeto já adotou: use `--update`.
 - `test/project.test.ts` › "instruções do pipeline" falhando → um guia ou skill cita um comando do pipeline sem `--prefix pipeline`, um comando que não existe ou um link quebrado.

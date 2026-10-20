@@ -26,7 +26,17 @@ Tudo o que é o pipeline mora em **uma pasta**. Tudo o que uma execução gera f
 Para levar o pipeline a outro repositório, você copia a base e mais nada.
 
 - **Projeto novo:** use este repositório como ponto de partida. O código gerado vai para `workspace/`.
-- **Projeto que já existe:** copie `pipeline/`, junte os blocos do `AGENTS.md` e do `CLAUDE.md` e mude `code` para `.` no `pipeline/flow.yaml`. O passo a passo, para fazer com o agente, está em [Montar o seu fluxo](pipeline/guias/montar-seu-fluxo.md#levar-o-pipeline-para-outro-repositório).
+- **Projeto que já existe:** na pasta dele, rode o `adopt` deste repositório e depois peça ao agente o onboard:
+
+  ```bash
+  npm --prefix C:/Users/davip/Documents/projetos/js/agent-skills-pipeline/pipeline run adopt -- .
+  ```
+
+  > Faça o onboard do pipeline.
+
+  O `adopt` copia a base inteira, junta os blocos do `AGENTS.md` e do `CLAUDE.md`, aponta `code` para `.` e instala tudo. O `onboard` escreve o `docs/FEATURE-MAP.md` do código que já existe e procura com a `find-skills` as skills do skills.sh que servem para o projeto. Até o onboard terminar, o `validate` falha e o `status` bloqueia as etapas. Detalhes (e `--update`, para trazer uma versão nova da base) em [Montar o seu fluxo](pipeline/guias/montar-seu-fluxo.md#levar-o-pipeline-para-outro-repositório).
+
+  Se preferir pedir ao agente: *"Rode `npm --prefix C:/Users/davip/Documents/projetos/js/agent-skills-pipeline/pipeline run adopt -- .` neste projeto e siga o próximo passo que ele mostrar."*
 
 ## Começando
 

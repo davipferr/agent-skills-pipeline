@@ -37,6 +37,8 @@ Se reprovar, o maestro volta para a implementação com as falhas já escritas. 
 
 Um agente não sabe operar o seu programa: que comando, que tela, que atalho, onde está o código. O mapa diz. A implementação o mantém, a verificação o usa, e qualquer pedido futuro ("tem um bug na exportação") começa por ele. A base tem o seu: o [`pipeline/FEATURE-MAP.md`](../FEATURE-MAP.md), com cada comando e skill, o código e o teste (um teste falha se ele ficar para trás). O de cada projeto gerado é uma seção do `docs/flow/05-implementacao.md` daquela execução, e não um arquivo dentro do código: o projeto gerado fica só com o código.
 
+Num projeto que **já existia** (levado com o `adopt`), o código anterior também precisa de mapa. A skill [`onboard`](../skills/onboard/SKILL.md) escreve o `docs/FEATURE-MAP.md` do projeto, provando cada comando, e a etapa `implement` o mantém em dia. Isso não depende de alguém lembrar: enquanto o mapa não existir com as seções certas, o `validate` falha e o `status` bloqueia todas as etapas.
+
 ### 3. Parar de adivinhar (skill `investigate`)
 
 O erro mais caro de um agente é afirmar uma causa que ele não verificou. A skill [`investigate`](../skills/investigate/SKILL.md) obriga a ordem: reproduzir → ler o código → hipótese com arquivo e linha → experimento que prova → teste vermelho. Sem reprodução, não há correção.

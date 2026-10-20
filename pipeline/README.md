@@ -92,6 +92,7 @@ Ao lado do fluxo ficam as **skills de apoio** (`helpers` no `flow.yaml`), que n�
 | `investigate` | algo falhou: reproduz e lê o código antes de afirmar a causa |
 | `harden` | transforma o "Trabalho manual" das entregas em regras duras, registradas em `endurecimento.md` |
 | `eval-skill` | testa uma skill com os casos de [`evals/`](evals/README.md), num agente sem contexto, e dá nota |
+| `onboard` | uma vez, num projeto que já existia: escreve o `docs/FEATURE-MAP.md` do código e procura skills para a stack com a `find-skills` |
 
 ## Começando
 
@@ -145,6 +146,7 @@ Quando terminar, `npm --prefix pipeline run archive` move os produtos da execuç
 | `npm --prefix pipeline run archive` | Move os produtos da execução atual para `docs/runs/` |
 | `npm --prefix pipeline run guard` | Falha se a base (`pipeline/`, `AGENTS.md`, `CLAUDE.md`) mudou durante uma execução sem você aprovar (`git add`) |
 | `npm --prefix pipeline run check` | Typecheck + testes + validate + guard (o pre-commit roda isto) |
+| `npm --prefix pipeline run adopt -- <pasta> [--update] [--code <pasta>] [--dry-run] [--skip-install]` | Leva a base para outro projeto (ou a atualiza lá) e instala tudo; depois, a skill `onboard` ([guia](guias/montar-seu-fluxo.md#levar-o-pipeline-para-outro-repositório)) |
 
 ## Estrutura
 
@@ -165,12 +167,13 @@ pipeline/
 │   ├── ship-report/
 │   ├── investigate/           #   skills de apoio (helpers)
 │   ├── harden/
-│   └── eval-skill/
+│   ├── eval-skill/
+│   └── onboard/               #   + template.md do docs/FEATURE-MAP.md de um projeto que já existia
 ├── adapters/                  # encaixe das skills externas no fluxo
 ├── evals/                     # casos de teste das skills (eval-skill)
 ├── guias/                     # documentação detalhada
 ├── githooks/pre-commit        # roda o check antes de cada commit (ligado pelo setup)
-├── scripts/                   # validate, status, setup, new-skill, diagram, archive, guard
+├── scripts/                   # validate, status, setup, new-skill, diagram, archive, guard, adopt
 │   └── lib/                   # lógica pura (testada em test/)
 ├── test/
 ├── FEATURE-MAP.md             # mapa da base: cada comando e skill, o código e o teste

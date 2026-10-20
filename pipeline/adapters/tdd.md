@@ -40,6 +40,8 @@ Mantenha a seção `## Mapa de funcionalidades` de `docs/flow/05-implementacao.m
 
 Se a interface for gráfica, a coluna "Como acionar" diz o caminho na tela (ex.: "Configurações → Conta → botão *Salvar* (`#save`)").
 
+**Projeto que já existia** (`code` diferente de `workspace`): o projeto tem também o mapa permanente, `docs/FEATURE-MAP.md`, escrito pela skill `onboard`. Ao terminar a etapa, acrescente nele as funcionalidades novas e corrija as que mudaram (o mesmo conteúdo da seção acima, no formato daquele arquivo). A seção do `05-implementacao.md` vai embora com o `archive`; o `docs/FEATURE-MAP.md` fica.
+
 ## Depois de cada fatia
 
 Rode os testes e acrescente a fatia em `docs/flow/05-implementacao.md`. Crie o arquivo na primeira fatia, com `status: in-progress` no cabeçalho:

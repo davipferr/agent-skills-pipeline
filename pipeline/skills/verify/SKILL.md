@@ -16,7 +16,7 @@ O código está na pasta do código (`code` em `npm --prefix pipeline run --sile
 
 ## Passos
 
-1. **Leia o mapa.** A seção "Mapa de funcionalidades" de `docs/flow/05-implementacao.md` diz como instalar, como rodar e onde está cada funcionalidade. Se ela não existir ou estiver errada (um comando que não funciona, uma tela que não existe), isso já é uma falha: registre e reprove.
+1. **Leia o mapa.** A seção "Mapa de funcionalidades" de `docs/flow/05-implementacao.md` diz como instalar, como rodar e onde está cada funcionalidade. Se ela não existir ou estiver errada (um comando que não funciona, uma tela que não existe), isso já é uma falha: registre e reprove. Num projeto que já existia, leia também o `docs/FEATURE-MAP.md` (o mapa do código anterior, escrito pela skill `onboard`) e confira se as funcionalidades novas entraram nele.
 
 2. **Rode numa cópia limpa.** Copie a pasta do código para uma pasta temporária **fora deste repositório** (sem `node_modules`, sem arquivos gerados; se a pasta do código for `.`, sem `pipeline/`, `docs/`, `.git/`, `.claude/` e `.agents/`) e trabalhe lá. Instale as dependências e rode os comandos de build, typecheck e testes que o mapa indica. Isso pega o que só funciona por acidente: arquivo que herda configuração da pasta de cima, dependência instalada só na sua máquina, caminho absoluto.
 

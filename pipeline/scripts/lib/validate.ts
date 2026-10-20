@@ -10,6 +10,7 @@ import {
   type LocalSkill,
   type Manifest,
 } from './skills.ts';
+import { ONBOARD_SKILL, onboardProblems, PROJECT_MAP } from './onboard.ts';
 
 export const AGENTS_FILE = 'AGENTS.md';
 /** Marcador do trecho do AGENTS.md que pertence ao pipeline (o que se copia para outro repositório). */
@@ -44,6 +45,11 @@ export function validateProject(flow: Flow, manifest: Manifest, localDirs: strin
   // Os agentes só descobrem o pipeline pelo AGENTS.md da raiz.
   if (!(probe.read(AGENTS_FILE) ?? '').includes(AGENTS_BLOCK)) {
     issues.push(warning(AGENTS_FILE, `falta o bloco do pipeline (${AGENTS_BLOCK} ... end): sem ele os agentes não sabem que existe o run-pipeline`));
+  }
+
+  // Projeto que já existia: o código precisa de um mapa antes da primeira execução.
+  for (const problem of onboardProblems(flow, probe)) {
+    issues.push(error(PROJECT_MAP, `${problem}. Peça ao agente a skill ${ONBOARD_SKILL} ("faça o onboard do pipeline")`));
   }
 
   // 2. Regras de cada etapa, na ordem.

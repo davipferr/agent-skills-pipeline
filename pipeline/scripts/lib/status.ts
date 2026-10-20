@@ -21,11 +21,18 @@ export interface PipelineStatus {
   steps: StepStatus[];
   /** A primeira etapa que não está `done`, ou `null` se o pipeline terminou. */
   next: StepStatus | null;
+  /**
+   * O que falta para o projeto poder rodar a primeira etapa (skill `onboard`), ou `null`.
+   * Enquanto não for `null`, toda etapa que não está pronta fica bloqueada.
+   */
+  onboard: string | null;
 }
 
 export interface StatusOptions {
   /** Ignora datas de modificação (útil logo após um `git clone`, que reescreve todas). */
   ignoreTime?: boolean;
+  /** Problemas de `onboardProblems`: enquanto houver algum, nenhuma etapa roda. */
+  onboard?: string[];
 }
 
 /** Estados de uma etapa cuja saída a próxima não pode usar. */
@@ -43,15 +50,17 @@ const UNUSABLE: Record<string, string> = {
 export function computeStatus(flow: Flow, probe: FileProbe, options: StatusOptions = {}): PipelineStatus {
   const ownerOf = producers(flow);
   const states = new Map<string, StepState>();
+  const onboard = options.onboard?.length ? options.onboard.join('; ') : null;
   const steps = flow.steps.map((step) => {
-    const status = stepStatus(step, probe, options, (file) => {
+    let status = stepStatus(step, probe, options, (file) => {
       const owner = ownerOf.get(file);
       return owner ? states.get(owner) : undefined;
     });
+    if (onboard !== null && status.state !== 'done') status = { ...status, state: 'blocked', reason: `falta o onboard (skill onboard): ${onboard}` };
     states.set(step.id, status.state);
     return status;
   });
-  return { flow: flow.name, code: flow.code, steps, next: steps.find((s) => s.state !== 'done') ?? null };
+  return { flow: flow.name, code: flow.code, steps, next: steps.find((s) => s.state !== 'done') ?? null, onboard };
 }
 
 function stepStatus(

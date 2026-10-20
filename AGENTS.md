@@ -19,6 +19,8 @@ Este repositório usa um **pipeline de skills**: uma ideia passa por etapas defi
 
 Use a skill **`run-pipeline`**. Ela lê `npm --prefix pipeline run --silent status -- --json` para saber a próxima etapa. Não pule etapas e não decida a ordem por conta própria.
 
+Num projeto que já existia (`code` diferente de `workspace`), a primeira coisa é a skill **`onboard`**: ela escreve o `docs/FEATURE-MAP.md` do código e procura skills para a stack com a `find-skills`. O `status` bloqueia as etapas até isso estar feito. Antes de mexer no código, comece pelo `docs/FEATURE-MAP.md`.
+
 Se o usuário descrever uma ideia nova sem mencionar o pipeline, pergunte se ele quer rodá-lo.
 
 ## Regras

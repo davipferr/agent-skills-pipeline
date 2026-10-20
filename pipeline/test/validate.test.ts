@@ -61,7 +61,7 @@ describe('validateProject', () => {
   });
 
   it('code não pode ficar dentro do pipeline nem dos artefatos', () => {
-    assert.deepEqual(messages({ ...valid, code: '.' }), []);
+    assert.doesNotMatch(messages({ ...valid, code: '.' }).join('\n'), /o código é do projeto/);
     for (const code of ['pipeline', 'pipeline/app', 'docs/flow', 'docs/runs/x']) {
       assert.match(messages({ ...valid, code }).join('\n'), /o código é do projeto/, code);
     }
@@ -139,5 +139,35 @@ describe('parseFlow', () => {
     const { flow, issues } = parseFlow('name: x\nsteps:\n  - id: a\n    inputs: []\n');
     assert.equal(flow, null);
     assert.deepEqual(issues.map((i) => i.message), ['`skill` é obrigatório', '`source` é obrigatório', '`outputs` precisa ser uma lista de caminhos (use [] se vazia)']);
+  });
+});
+
+describe('onboard (projeto que já existia)', () => {
+  const existing = { ...valid, code: '.' };
+  const map = [
+    '# Mapa',
+    '## Instalar e rodar',
+    '- Testes: `npm test`',
+    '## Funcionalidades',
+    '| Funcionalidade | Como acionar | Código | Teste |',
+    '|---|---|---|---|',
+    '| Login | `/login` | `src/auth.ts` | `test/auth.test.ts` |',
+    '## Skills do projeto',
+    '- nenhuma',
+  ].join('\n');
+  const text = (files: Record<string, string>) => messages(existing, project(files)).join('\n');
+
+  it('num projeto novo (code: workspace) não pede o mapa', () => {
+    assert.deepEqual(messages(valid), []);
+  });
+
+  it('sem docs/FEATURE-MAP.md é erro, e a mensagem manda rodar a skill onboard', () => {
+    assert.match(text({}), /error: falta o docs\/FEATURE-MAP.md.*skill onboard/);
+  });
+
+  it('o mapa precisa das três seções e de pelo menos uma funcionalidade', () => {
+    assert.equal(text({ 'docs/FEATURE-MAP.md': map }), '');
+    assert.match(text({ 'docs/FEATURE-MAP.md': map.replace('## Skills do projeto', '## Outra') }), /sem a seção "## Skills do projeto"/);
+    assert.match(text({ 'docs/FEATURE-MAP.md': map.replace(/^\| Login.*$/m, '') }), /não tem nenhuma linha/);
   });
 });

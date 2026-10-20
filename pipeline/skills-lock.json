@@ -17,6 +17,12 @@
       "sourceType": "local",
       "computedHash": "4133a9b2bbc734703d6d04786da05aaca42152b8ce78f287666e3e700e0b29b6"
     },
+    "find-skills": {
+      "source": "vercel-labs/skills",
+      "sourceType": "github",
+      "skillPath": "skills/find-skills/SKILL.md",
+      "computedHash": "b146008599c31057cef1c145774cea5d5afb30e8f43fa802e47a4b461419aaaf"
+    },
     "grilling": {
       "source": "mattpocock/skills",
       "sourceType": "github",
@@ -31,7 +37,12 @@
     "investigate": {
       "source": "./pipeline",
       "sourceType": "local",
-      "computedHash": "43ce70905bc44d85f5cb4a5b01352ad40e422861a1d240f2dd1943f9c34b9b24"
+      "computedHash": "92c5ed9daae049b7dd33fbb909d047928771baad3885de10260b9efd0681ecec"
+    },
+    "onboard": {
+      "source": "./pipeline",
+      "sourceType": "local",
+      "computedHash": "3f18f14cfe09e713fd7c584dc3dc0d388516c55d5728b7ecbdc1c664b621233c"
     },
     "plan-architecture": {
       "source": "./pipeline",
@@ -46,7 +57,7 @@
     "run-pipeline": {
       "source": "./pipeline",
       "sourceType": "local",
-      "computedHash": "870b253b19a920cc511f2584168eb45b3fc8a2a06e04404ed573855cc36da436"
+      "computedHash": "23c588a83bb83ada19d13a044f258018fbe52dc92e31535e916041e246c50f85"
     },
     "ship-report": {
       "source": "./pipeline",
@@ -62,7 +73,7 @@
     "verify": {
       "source": "./pipeline",
       "sourceType": "local",
-      "computedHash": "d376510942ef5157ca7728391c936af1a0f73de73cb54641eedcf195f1130c51"
+      "computedHash": "59d8e1791921b16b69f36c083950df940c9db345a2266ce1bc983916eafc4329"
     },
     "write-prd": {
       "source": "./pipeline",

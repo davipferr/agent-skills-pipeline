@@ -17,7 +17,9 @@ As etapas só conversam por **arquivos** (os "bastões" em `docs/flow/`). Nunca 
    npm --prefix pipeline run --silent status -- --json
    ```
 
-   O JSON tem `next` (a próxima etapa, ou `null` se tudo estiver pronto) e `steps` (cada etapa com `state`: `done`, `stale`, `in-progress`, `invalid`, `rejected`, `ready` ou `blocked`). Não deduza o estado lendo arquivos por conta própria: o script é a fonte da verdade.
+   O JSON tem `next` (a próxima etapa, ou `null` se tudo estiver pronto), `steps` (cada etapa com `state`: `done`, `stale`, `in-progress`, `invalid`, `rejected`, `ready` ou `blocked`) e `onboard`. Não deduza o estado lendo arquivos por conta própria: o script é a fonte da verdade.
+
+   **Se `onboard` não for `null`**, o projeto já existia e ainda não foi preparado (o texto diz o que falta): chame a skill `onboard` antes de qualquer etapa e pare quando ela terminar. Enquanto isso, todas as etapas aparecem `blocked`.
 
 2. **Se `next` for `null`**, o pipeline terminou. Mostre o resumo do artefato da última etapa do `flow.yaml` e sugira `npm --prefix pipeline run archive` para guardar esta execução e começar outra. Se a seção "Trabalho manual" dele não estiver vazia, sugira também a skill `harden`. Pare.
 
@@ -55,4 +57,4 @@ As etapas só conversam por **arquivos** (os "bastões" em `docs/flow/`). Nunca 
 - Não edite saídas de etapas anteriores para "consertar" a etapa atual. Se uma entrada estiver ruim, diga qual etapa precisa ser refeita.
 - Se o `status` acusar erro no `flow.yaml`, rode `npm --prefix pipeline run validate` e mostre o erro ao usuário em vez de tentar adivinhar o fluxo.
 - Se uma skill da etapa não estiver instalada, peça para o usuário rodar `npm --prefix pipeline run setup`.
-- Os `helpers` do `flow.yaml` são skills de apoio, não etapas: `investigate` (quando algo falhar), `harden` (depois da entrega) e `eval-skill` (para testar uma skill). Nunca os rode como se fossem uma etapa.
+- Os `helpers` do `flow.yaml` são skills de apoio, não etapas: `investigate` (quando algo falhar), `harden` (depois da entrega) e `eval-skill` (para testar uma skill) e `onboard` (uma vez, num projeto que já existia). Nunca os rode como se fossem uma etapa.

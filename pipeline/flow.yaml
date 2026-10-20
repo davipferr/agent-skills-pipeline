@@ -39,6 +39,7 @@ helpers:
   - investigate   # reproduzir e ler o código antes de afirmar a causa de um problema
   - harden        # transformar o trabalho manual das execuções em regras duras
   - eval-skill    # testar uma skill com casos e nota, como teste unitário
+  - onboard       # projeto que já existia: mapa do código (docs/FEATURE-MAP.md) e skills da stack, antes da 1ª execução
 
 steps:
   - id: idea

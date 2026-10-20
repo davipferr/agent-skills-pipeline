@@ -13,7 +13,7 @@
 // Também liga o hook de pre-commit de pipeline/githooks/ (git config core.hooksPath).
 
 import { spawnSync } from 'node:child_process';
-import { existsSync, renameSync } from 'node:fs';
+import { copyFileSync, existsSync, renameSync } from 'node:fs';
 import { join } from 'node:path';
 import { parseArgs } from 'node:util';
 import { PIPELINE_DIR } from './lib/files.ts';
@@ -58,12 +58,18 @@ for (const command of commands) {
 
 // O CLI grava o skills-lock.json (as versões instaladas) na raiz. Ele é do pipeline:
 // vai para pipeline/, para a raiz ficar só com o produto e as instruções dos agentes.
+// Num projeto que já versionava o seu skills-lock.json na raiz (antes do adopt), ele é
+// do projeto: fica lá, e o pipeline/ recebe uma cópia.
+const git = (...args: string[]) => spawnSync('git', args, { cwd: project.root, encoding: 'utf8' });
 const rootLock = join(project.root, LOCK_FILE);
-if (!values['dry-run'] && existsSync(rootLock)) renameSync(rootLock, join(project.root, PIPELINE_DIR, LOCK_FILE));
+if (!values['dry-run'] && existsSync(rootLock)) {
+  const pipelineLock = join(project.root, PIPELINE_DIR, LOCK_FILE);
+  if (git('ls-files', '--error-unmatch', LOCK_FILE).status === 0) copyFileSync(rootLock, pipelineLock);
+  else renameSync(rootLock, pipelineLock);
+}
 
 // Liga o hook de pre-commit versionado em pipeline/githooks/ (regras duras antes de cada commit).
 // Não mexe se o projeto já usa outro lugar para hooks (ex.: husky).
-const git = (...args: string[]) => spawnSync('git', args, { cwd: project.root, encoding: 'utf8' });
 if (!values['dry-run'] && existsSync(join(project.root, HOOKS_DIR, 'pre-commit')) && git('rev-parse', '--git-dir').status === 0) {
   const current = git('config', '--get', 'core.hooksPath').stdout.trim();
   if (current === '' || current === '.githooks') {
