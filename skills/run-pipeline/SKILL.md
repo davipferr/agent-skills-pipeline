@@ -81,4 +81,4 @@ Entregue na conversa:
 
 Não há estado salvo. Veja a conversa e o `git status`/`git diff`, diga em que etapa a tarefa está e siga dali.
 
-Se a proposta já vier aprovada, leia o código que ela toca, liste quem mais o usa e comece na etapa 4. A aprovação dispensa só a parada da etapa 3: as etapas 5 e 6 continuam valendo.
+Se a proposta já vier aprovada, chame a `problem-solver`, leia o código que ela toca, liste quem mais o usa e comece na etapa 4. A aprovação dispensa só a parada da etapa 3: as etapas 5 e 6 continuam valendo.
