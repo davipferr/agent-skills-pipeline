@@ -1,7 +1,7 @@
 {
   "name": "agent-skills-pipeline",
   "version": "0.1.0",
-  "description": "As skills do meu trabalho com agentes de código: da tarefa até os casos de teste, com o desenvolvedor supervisionando, sem deixar rastro no git dos projetos.",
+  "description": "As skills do meu trabalho com agentes de código: da tarefa até os casos de teste, com o desenvolvedor supervisionando.",
   "private": true,
   "type": "module",
   "license": "MIT",

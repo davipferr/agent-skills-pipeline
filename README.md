@@ -30,17 +30,23 @@ tarefa → entender → analisar o código e o impacto → propor
 | [`investigate`](skills/investigate/SKILL.md) | Diagnóstico curto de uma falha, sem adivinhar |
 | [`eval-skill`](skills/eval-skill/SKILL.md) | Testa uma skill com casos de [`evals/`](evals/README.md). Fica só neste repositório |
 
-## Levar para um projeto
+## Instalar
 
-Requisitos: Node **22.18+** e git. Na pasta deste repositório:
+Requisitos: Node **22.18+**. Na pasta deste repositório:
+
+```bash
+npm run adopt
+```
+
+O `adopt` copia as skills para as pastas globais, `.claude/skills/` e `.agents/skills/` da pasta do usuário. Elas passam a valer em todos os projetos, sem nenhum arquivo dentro deles, o que serve bem para tarefas que mexem em mais de um projeto. Rode o mesmo comando para atualizar: se uma skill já existir com outro conteúdo, ele mostra qual é e só a troca com `--force`. As outras skills da pasta não são tocadas.
+
+Para instalar num projeto só, passe a pasta dele. As skills aparecem no git do projeto como qualquer arquivo novo:
 
 ```bash
 npm run adopt -- C:/caminho/do/projeto
 ```
 
-O `adopt` copia as skills para `.claude/skills/` e `.agents/skills/` do projeto e as esconde no `.git/info/exclude`, que é local e nunca é versionado. Nenhum arquivo versionado muda, o `git status` do projeto continua limpo e nada pode ir para produção por engano. Ele confere isso no final, e nunca sobrescreve uma skill que seja do projeto.
-
-Rode o mesmo comando para atualizar as skills. Depois é só abrir o agente na pasta do projeto e passar a tarefa:
+Depois é só abrir o agente na pasta do projeto e passar a tarefa:
 
 > Resolve esta tarefa: <cole o ticket>
 

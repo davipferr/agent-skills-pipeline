@@ -1,18 +1,19 @@
 # Mapa de funcionalidades
 
-Cada comando e cada skill deste repositório, onde estão e qual teste os cobre. Comece por aqui para mexer no pipeline. Este mapa é só deste repositório: o `adopt` não o leva para os projetos. `test/project.test.ts` falha se faltar algo.
+Cada comando e cada skill deste repositório, onde estão e qual teste os cobre. Comece por aqui para mexer no pipeline. Este mapa é só deste repositório: o `adopt` não o instala. `test/project.test.ts` falha se faltar algo.
 
 ## Instalar e rodar
 
-- Requisitos: Node.js ≥ 22.18 e git (o `adopt` roda sem `npm install`; TypeScript direto no Node, sem build)
-- Instalar as skills aqui: `npm run adopt -- .`
+- Requisitos: Node.js ≥ 22.18 (o `adopt` roda sem `npm install`; TypeScript direto no Node, sem build)
+- Instalar as skills na pasta global: `npm run adopt`
+- Atualizar as cópias deste repositório: `npm run adopt -- .`
 - Conferir tudo: `npm run check` (precisa de `npm install`)
 
 ## Funcionalidades
 
 | Funcionalidade | Como acionar | Código | Teste |
 |----------------|--------------|--------|-------|
-| Instalar ou atualizar as skills num repositório, sem rastro no git dele | `npm run adopt -- <pasta> [--dry-run]` | `scripts/adopt.ts`, `scripts/lib/adopt.ts` | `test/adopt.test.ts` |
+| Instalar ou atualizar as skills na pasta global, ou num projeto se passar a pasta | `npm run adopt [-- <pasta>] [--force] [--dry-run]` | `scripts/adopt.ts`, `scripts/lib/adopt.ts` | `test/adopt.test.ts` |
 | Checagem completa | `npm run check` | `package.json` | — |
 | Typecheck | `npm run typecheck` | `tsconfig.json` | — |
 | Testes | `npm test` | `test/` | `test/project.test.ts` (skills, links, este mapa) |
@@ -23,6 +24,6 @@ Cada comando e cada skill deste repositório, onde estão e qual teste os cobre.
 
 ## Erros conhecidos
 
-- `adopt` dizendo que as skills já existem → o projeto tem uma skill com o mesmo nome que não veio do `adopt`. Ele nunca sobrescreve: renomeie ou apague a do projeto.
-- `adopt` dizendo que o git está enxergando as skills → o `.gitignore` do projeto reativou `.claude/` ou `.agents/` e venceu o `.git/info/exclude`. Apague as skills instaladas antes de qualquer commit.
-- Skill desatualizada num projeto → as skills são copiadas: rode o `adopt` de novo depois de mudar `skills/`.
+- `adopt` dizendo que uma skill já existe com outro conteúdo → confira a diferença e rode com `--force`. É o caso normal depois de mudar `skills/`.
+- `adopt` dizendo que a pasta já é de skills → para a pasta global, rode `npm run adopt` sem pasta.
+- Skill desatualizada → as skills são copiadas: rode o `adopt` de novo depois de mudar `skills/`.

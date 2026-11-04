@@ -3,7 +3,7 @@
 Este repositório guarda o jeito de trabalhar de um desenvolvedor com um agente de código: a tarefa entra, o agente analisa, propõe, implementa e entrega os casos de teste, e o desenvolvedor supervisiona cada passo. O produto daqui são as **skills**, que funcionam com qualquer agente compatível com o padrão Agent Skills.
 
 - `skills/`: as skills. `run-pipeline` conduz a tarefa, `problem-solver` é o método, `investigate` diagnostica falhas, `eval-skill` avalia as outras.
-- `scripts/adopt.ts`: instala as skills em outro repositório sem deixar rastro no git dele.
+- `scripts/adopt.ts`: instala as skills na pasta global do usuário ou num projeto.
 - `evals/`: casos da `eval-skill`.
 - `runs/`: execuções antigas, só como histórico.
 - `FEATURE-MAP.md`: o mapa do repositório. Comece por ele para mexer aqui.
