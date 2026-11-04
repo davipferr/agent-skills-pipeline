@@ -1,0 +1,21 @@
+{
+  "name": "agent-skills-pipeline",
+  "version": "0.1.0",
+  "description": "As skills do meu trabalho com agentes de código: da tarefa até os casos de teste, com o desenvolvedor supervisionando, sem deixar rastro no git dos projetos.",
+  "private": true,
+  "type": "module",
+  "license": "MIT",
+  "engines": {
+    "node": ">=22.18.0"
+  },
+  "scripts": {
+    "adopt": "node scripts/adopt.ts",
+    "typecheck": "tsc",
+    "test": "node --test \"test/**/*.test.ts\"",
+    "check": "npm run typecheck && npm test"
+  },
+  "devDependencies": {
+    "@types/node": "24.19.1",
+    "typescript": "5.9.3"
+  }
+}

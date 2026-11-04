@@ -1,10 +1,5 @@
 node_modules/
 
-# Skills instaladas pelo `npm --prefix pipeline run setup` (reproduzíveis a partir do
-# pipeline/skills.json, como o node_modules é reproduzível a partir do package.json)
+# Skills instaladas pelo `npm run adopt -- .` (cópias de skills/)
 .claude/skills/
 .agents/skills/
-
-# Produto: o código gerado pela etapa de implementação (a pasta `code` do
-# pipeline/flow.yaml). O `archive` o guarda em docs/runs/ junto com a execução.
-/workspace/

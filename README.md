@@ -1,57 +1,77 @@
 # agent-skills-pipeline
 
-Um template para projetos que usam **skills encadeadas**: uma ideia passa por oito etapas (cada uma uma [Agent Skill](https://www.skills.sh/docs)) e sai como feature implementada com testes, verificada como um usuário usaria, revisada e documentada. Funciona com Claude Code, Codex e qualquer agente compatível com o padrão Agent Skills.
+O meu jeito de trabalhar com um agente de código, guardado num lugar só. O objetivo é fazer em 4 horas o trabalho de 8: pegar uma tarefa e entregá-la sem quebrar o código e sem criar regressão, só conversando com o agente.
 
-## Base e produto
+Funciona com Claude Code, Codex e qualquer agente compatível com o padrão [Agent Skills](https://www.skills.sh/docs), em qualquer empresa: a estrutura é sempre a mesma.
 
-Tudo o que é o pipeline mora em **uma pasta**. Tudo o que uma execução gera fica **fora** dela.
+## Como funciona
 
 ```
-<repositório>/
-├── pipeline/          ← BASE: o pipeline inteiro (skills, scripts, testes, regras, guias)
-├── AGENTS.md          ← BASE: instruções para os agentes (bloco entre <!-- pipeline:start/end -->)
-├── CLAUDE.md          ← BASE: o mesmo, para o Claude Code
-├── docs/flow/         ← PRODUTO: os artefatos da execução atual
-├── docs/runs/         ← PRODUTO: execuções arquivadas
-└── workspace/         ← PRODUTO: o código do projeto (`code` no pipeline/flow.yaml)
+tarefa → entender → analisar o código e o impacto → propor
+                                                       │
+                                        (eu aprovo) ◄──┘
+                                             │
+              implementar → revisar o diff → casos de teste de QA
+                                                       │
+                              (eu testo, faço commit e PR) ◄──┘
 ```
 
-| | Base | Produto |
-|---|---|---|
-| O que é | o pipeline: como transformar uma ideia em feature | o resultado de uma execução |
-| Onde fica | `pipeline/` + o bloco do pipeline no `AGENTS.md`/`CLAUDE.md` | `docs/flow/`, `docs/runs/` e a pasta do código |
-| Vai para outro repositório? | **sim**, inteira | **não** |
-| Quem protege | `guard` (nada da base muda durante uma execução) | `validate` (artefato só em `docs/flow/`, código nunca dentro de `pipeline/`) |
+- **Eu supervisiono.** O agente para antes de implementar e para na entrega. A palavra final é minha.
+- **O agente nunca faz commit, push nem PR.**
+- **Nada vai para o projeto além do código da tarefa.** Sem arquivos de plano, relatório ou mapa: tudo fica na conversa.
+- **Sem testes automatizados por padrão.** No fim, o agente entrega os casos de teste como um QA faria, e eu confiro.
 
-Para levar o pipeline a outro repositório, você copia a base e mais nada.
+## As skills
 
-- **Projeto novo:** use este repositório como ponto de partida. O código gerado vai para `workspace/`.
-- **Projeto que já existe:** na pasta dele, rode o `adopt` deste repositório e depois peça ao agente o onboard:
+| Skill | Para quê |
+|-------|----------|
+| [`run-pipeline`](skills/run-pipeline/SKILL.md) | Conduz a tarefa pelas etapas acima |
+| [`problem-solver`](skills/problem-solver/SKILL.md) | O método: evidência antes de opinião, causa raiz, escopo e impacto |
+| [`investigate`](skills/investigate/SKILL.md) | Diagnóstico curto de uma falha, sem adivinhar |
+| [`eval-skill`](skills/eval-skill/SKILL.md) | Testa uma skill com casos de [`evals/`](evals/README.md). Fica só neste repositório |
 
-  ```bash
-  npm --prefix C:/Users/davip/Documents/projetos/js/agent-skills-pipeline/pipeline run adopt -- .
-  ```
+## Levar para um projeto
 
-  > Faça o onboard do pipeline.
-
-  O `adopt` copia a base inteira, junta os blocos do `AGENTS.md` e do `CLAUDE.md`, aponta `code` para `.` e instala tudo. O `onboard` escreve o `docs/FEATURE-MAP.md` do código que já existe e procura com a `find-skills` as skills do skills.sh que servem para o projeto. Até o onboard terminar, o `validate` falha e o `status` bloqueia as etapas. Detalhes (e `--update`, para trazer uma versão nova da base) em [Montar o seu fluxo](pipeline/guias/montar-seu-fluxo.md#levar-o-pipeline-para-outro-repositório).
-
-  Se preferir pedir ao agente: *"Rode `npm --prefix C:/Users/davip/Documents/projetos/js/agent-skills-pipeline/pipeline run adopt -- .` neste projeto e siga o próximo passo que ele mostrar."*
-
-## Começando
-
-Requisitos: Node **22.18+**.
+Requisitos: Node **22.18+** e git. Na pasta deste repositório:
 
 ```bash
-npm --prefix pipeline install
+npm run adopt -- C:/caminho/do/projeto
+```
+
+O `adopt` copia as skills para `.claude/skills/` e `.agents/skills/` do projeto e as esconde no `.git/info/exclude`, que é local e nunca é versionado. Nenhum arquivo versionado muda, o `git status` do projeto continua limpo e nada pode ir para produção por engano. Ele confere isso no final, e nunca sobrescreve uma skill que seja do projeto.
+
+Rode o mesmo comando para atualizar as skills. Depois é só abrir o agente na pasta do projeto e passar a tarefa:
+
+> Resolve esta tarefa: <cole o ticket>
+
+Por padrão, o agente não roda nem depura a aplicação: ele escreve instruções para eu rodar. Num projeto onde ele pode executar tudo sozinho, a linha `problem-solver mode: hands-on` no `CLAUDE.md` muda isso.
+
+## Mexer no pipeline
+
+```bash
+npm install
 ```
 
 ```bash
-npm --prefix pipeline run setup
+npm run check
 ```
 
-Depois abra o agente nesta pasta e diga:
+Depois de mudar uma skill, rode `npm run adopt -- .` para atualizar a cópia deste repositório. O mapa de tudo está no [`FEATURE-MAP.md`](FEATURE-MAP.md). Para avaliar uma skill, abra uma conversa nova com o agente e peça para rodar a `eval-skill`.
 
-> Rode o pipeline. Minha ideia: um comando que conta as palavras de um texto e mostra as mais repetidas.
+## O que saiu, para reavaliar depois
 
-Os comandos do pipeline rodam de qualquer pasta do repositório com `npm --prefix pipeline run <comando>`. A documentação completa (o fluxo, os comandos, os guias) está em [`pipeline/README.md`](pipeline/README.md).
+A versão anterior seguia a ideia de automação total da curva de confiança de Lauren Tan. Numa empresa, isso não cabe de uma vez: a automação cresce passo a passo. Tudo isto está no git, no commit `df32200`, e pode voltar se fizer falta:
+
+| O que saiu | O que fazia | Por que saiu |
+|------------|-------------|--------------|
+| `capture-idea`, `write-prd`, `plan-architecture` | Ideia, PRD e arquitetura em arquivos | A tarefa já vem da empresa; a análise cabe na conversa |
+| `tdd`, `grilling`, `codebase-design` | Testes primeiro e interrogatório | Não refletem o trabalho real; os casos de QA substituem os testes |
+| `verify`, `review-against-prd`, `ship-report` | Verificação, revisão e relatório em arquivos | Viraram etapas curtas do `run-pipeline`, sem arquivos |
+| `harden` | Trabalho manual vira regra dura | Reavaliar quando houver histórico de tarefas reais |
+| `onboard`, `find-skills`, `FEATURE-MAP.md` por projeto | Mapa do código e skills da stack | Geram arquivos que não podem ir para o projeto |
+| `docs/flow/`, `flow.yaml`, `status`, `guard`, `validate`, `archive`, `diagram`, `new-skill` | Artefatos entre etapas e as checagens deles | Sem artefatos, não há o que checar |
+| Skills do skills.sh (`skills.json`, `setup`) | Instalação de skills externas | Nenhuma foi útil no trabalho real; o `adopt` copia as skills locais |
+| `githooks/` | Pre-commit com o `check` | Só atrapalhava; o `check` continua disponível |
+| `guias/` | Guias da versão anterior | Descreviam o que saiu |
+
+`runs/` guarda a execução antiga como histórico.
