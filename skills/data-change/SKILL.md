@@ -15,7 +15,7 @@ Um erro no código se corrige com outro deploy. Um erro nos dados pode não ter 
 
 ## Passos
 
-1. **Olhe os dados que já existem.** Quantos registros são afetados? Há nulos, duplicados ou formato antigo? A regra nova invalida algo que já está salvo? Prepare uma consulta somente de leitura e use o resultado real, ou peça ao desenvolvedor para rodá-la.
+1. **Olhe os dados que já existem.** Quantos registros são afetados? Há nulos, vazios, duplicados ou formato antigo? A regra nova invalida algo que já está salvo? O que o script não consegue corrigir fica fora dele até o desenvolvedor decidir. Prepare uma consulta somente de leitura e use o resultado real, ou peça ao desenvolvedor para rodá-la.
 
 2. **Confira a compatibilidade durante o deploy.** Por um tempo, o código antigo pode rodar com o banco novo, ou o contrário. Renomear ou remover coluna quebra quem ainda usa o nome antigo. Quando houver esse risco, divida em passos: adicionar o novo, migrar os dados, trocar o código e só depois remover o antigo.
 
@@ -23,7 +23,7 @@ Um erro no código se corrige com outro deploy. Um erro nos dados pode não ter 
 
 4. **Estime o custo em produção.** Tabela grande, trava de escrita ao alterar coluna ou criar índice, atualização que precisa rodar em lotes, horário de menor uso.
 
-5. **Planeje como desfazer.** Diga como reverter cada passo e se algum dado se perde. Se a mudança não tiver volta, destaque isso e deixe a decisão com o desenvolvedor.
+5. **Planeje como desfazer.** Diga como reverter cada passo, inclusive o deploy, considerando o código que estará no ar naquele momento, e se algum dado se perde. Se a mudança não tiver volta, destaque isso e deixe a decisão com o desenvolvedor.
 
 6. **Entregue na conversa:**
 
