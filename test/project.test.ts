@@ -54,6 +54,28 @@ describe('skills', () => {
   });
 });
 
+describe('evals', () => {
+  const casesOf = (skill: string) => {
+    const dir = join(root, 'evals', skill);
+    return existsSync(dir) ? readdirSync(dir).map((name) => join(dir, name)) : [];
+  };
+
+  it('cada skill de apoio tem pelo menos um caso', () => {
+    assert.deepEqual(supportSkills.filter((skill) => casesOf(skill).length === 0), []);
+  });
+
+  it('cada caso tem pedido, critérios com peso, nota mínima e arquivos', () => {
+    for (const skill of readdirSync(join(root, 'evals'), { withFileTypes: true }).filter((d) => d.isDirectory()).map((d) => d.name)) {
+      for (const dir of casesOf(skill)) {
+        const text = readFileSync(join(dir, 'caso.md'), 'utf8');
+        for (const section of ['## Pedido', '## Critérios', '## Nota mínima']) assert.ok(text.includes(section), dir + ': falta ' + section);
+        assert.match(text, /^| 1 | .+ | d+ |$/m, dir + ': critério sem peso');
+        assert.ok(existsSync(join(dir, 'arquivos')), dir + ': falta arquivos/');
+      }
+    }
+  });
+});
+
 describe('instruções', () => {
   it('só citam comandos que existem no package.json', () => {
     const unknown = instructions.flatMap(({ name, text }) =>
