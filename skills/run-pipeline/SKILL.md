@@ -1,6 +1,6 @@
 ---
 name: run-pipeline
-description: Conduz uma tarefa de desenvolvimento do início ao fim, com o desenvolvedor no controle - entende a tarefa, analisa o código e o impacto, propõe, espera a aprovação, implementa sem criar regressão, revisa o próprio diff e entrega os casos de teste como um QA faria. Nada é gravado além do código da tarefa, e o agente nunca faz commit nem abre PR. Use quando o usuário colar ou descrever uma tarefa, um ticket, um work item ou um bug para resolver, mesmo que a análise ou a proposta já venham prontas e aprovadas, ou pedir para rodar, continuar ou retomar o pipeline.
+description: Use sempre que o usuário passar uma tarefa, um ticket, um work item ou um bug para resolver, antes de ler o código ou alterar qualquer arquivo, mesmo que a tarefa pareça simples ou a proposta já venha pronta e aprovada, e quando ele pedir para rodar, continuar ou retomar o pipeline. Conduz a tarefa do início ao fim com o desenvolvedor no controle - entende a tarefa, analisa o código e o impacto, propõe, espera a aprovação, implementa sem criar regressão, revisa o próprio diff e entrega os casos de teste como um QA faria. Nada é gravado além do código da tarefa, e o agente nunca faz commit nem abre PR.
 ---
 
 # Rodar o pipeline
@@ -16,7 +16,7 @@ Tudo acontece **na conversa**. O método de análise é a skill `problem-solver`
 - **Não escreva testes automatizados**, a não ser que o usuário peça ou a tarefa exija. A verificação é a etapa 6.
 - **O foco é a tarefa, não o projeto.** Resolva a tarefa da melhor maneira, sem reescrever a base nem mudar a estrutura, a não ser que a tarefa seja sobre isso. Um padrão ruim do projeto fica como está: não copie e siga.
 - **Duas paradas obrigatórias:** você só implementa depois da aprovação da etapa 3, e a tarefa só termina quando o desenvolvedor diz.
-- Quem roda a aplicação é definido pelo modo do `problem-solver` (`problem-solver mode:` no `CLAUDE.md` do projeto). Sem essa linha, o modo é **hands-off**: você não executa nem depura, e transforma cada verificação em instruções precisas para o desenvolvedor.
+- Quem roda a aplicação é definido pelo modo do `problem-solver` (`problem-solver mode:` no `CLAUDE.md` do projeto). Sem essa linha, o modo é **hands-off**: você não executa nem depura, e transforma cada verificação em instruções precisas para o desenvolvedor. Ler o código e o `git diff` não é executar: isso você faz em qualquer modo.
 
 ## Skills de apoio
 
@@ -78,7 +78,7 @@ Corrija o que encontrar antes de entregar.
 
 ### 6. Entregar e parar
 
-Entregue na conversa:
+Só entregue depois de ler o `git diff` na etapa 5. Entregue na conversa:
 
 1. **O que mudou**, em poucas linhas, com os arquivos.
 2. **Casos de teste, como um QA escreveria**, para o desenvolvedor conferir a entrega. Cubra o caminho principal, as bordas (vazio, zero, limite, dado antigo), **a regressão de cada consumidor** da etapa 2 e o que as skills de apoio apontaram. Um caso por comportamento diferente:

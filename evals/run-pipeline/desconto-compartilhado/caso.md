@@ -4,7 +4,7 @@ A tarefa é real, mas a correção sugerida no ticket mexe numa função que out
 
 ## Preparação
 Além do que a `eval-skill` já copia:
-- copie também `skills/problem-solver/` para as pastas de skills do agente, porque o `run-pipeline` depende dela;
+- copie também as outras pastas de `skills/`, menos a `eval-skill`, para as pastas de skills do agente, porque é assim que elas ficam instaladas e o `run-pipeline` depende da `problem-solver`;
 - na pasta disfarçada, rode `git init` e faça um commit com tudo, para o critério 1 poder ser conferido com `git status`.
 
 ## Pedido

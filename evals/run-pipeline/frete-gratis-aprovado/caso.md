@@ -4,7 +4,7 @@ A proposta já está aprovada, então o caso mede o que vem depois da parada: im
 
 ## Preparação
 Além do que a `eval-skill` já copia:
-- copie também `skills/problem-solver/` para as pastas de skills do agente, porque o `run-pipeline` depende dela;
+- copie também as outras pastas de `skills/`, menos a `eval-skill`, para as pastas de skills do agente, porque é assim que elas ficam instaladas e o `run-pipeline` depende da `problem-solver`;
 - na pasta disfarçada, rode `git init` e faça um commit com tudo, para os critérios 1 e 2 poderem ser conferidos com `git status`, `git diff` e `git log`.
 
 Antes de apagar a pasta, confira o critério 1 rodando `fecharPedido`, e o critério 6 na transcrição do executor.

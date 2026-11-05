@@ -26,7 +26,7 @@ O formato dos casos está em `evals/README.md`.
 
    Anote qual agente e qual modelo executaram.
 
-4. **Julgue.** Para cada critério do caso, dê uma nota de 0 a 10 e justifique citando um trecho do que o executor produziu. Sem trecho, nota 0. A nota do caso é a média ponderada pelos pesos. Se der, julgue com um agente ou modelo **diferente** do executor e diga qual foi.
+4. **Julgue.** Antes, confira na transcrição se o executor chamou a skill avaliada ou leu o `SKILL.md` dela. Se não, o caso é inválido: não dê nota e diga isso no resumo. Se nenhum caso carregou a skill, a mudança a propor no passo 5 é na `description`, porque ninguém leu o corpo. Sem transcrição, peça uma ao usuário. Para cada critério do caso, dê uma nota de 0 a 10 e justifique citando um trecho do que o executor produziu. Sem trecho, nota 0. A nota do caso é a média ponderada pelos pesos. Se der, julgue com um agente ou modelo **diferente** do executor e diga qual foi.
 
 5. **Suba a nota, se precisar** (no máximo 3 rodadas):
    - Para cada critério abaixo do mínimo, proponha a **menor** mudança no `SKILL.md` que o resolveria. A mudança tem que ser geral: nunca cite o caso nem os dados dele, senão você ensina a skill a passar no teste, e não a fazer o trabalho.
