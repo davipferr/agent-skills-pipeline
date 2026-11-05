@@ -6,7 +6,6 @@ Este repositório guarda o jeito de trabalhar de um desenvolvedor com um agente 
 - `scripts/adopt.ts`: instala as skills na pasta global do usuário ou num projeto.
 - `evals/`: casos da `eval-skill`.
 - `runs/`: execuções antigas, só como histórico.
-- `FEATURE-MAP.md`: o mapa do repositório. Comece por ele para mexer aqui.
 
 ## Quando o usuário passar uma tarefa
 
@@ -20,5 +19,3 @@ Use a skill **`run-pipeline`**.
 - **Prova é comando + saída.** Não diga que algo funciona sem ter rodado.
 - Quando algo falhar, use a skill `investigate`: reproduzir e ler o código antes de afirmar a causa.
 - Ao mudar `skills/`, rode `npm run adopt -- .`: as skills são **copiadas** para `.claude/skills/` e `.agents/skills/`.
-- Antes de concluir uma mudança aqui, rode `npm run check` e atualize o `FEATURE-MAP.md` quando um comando ou uma skill mudar (um teste falha se faltar).
-- Scripts em TypeScript executado direto pelo Node (≥ 22.18): imports com extensão `.ts`, sem `enum` nem `namespace` (`erasableSyntaxOnly`).

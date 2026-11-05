@@ -1,5 +1,5 @@
-// Testa o que este repositório promete: se uma skill ou um guia sair do padrão,
-// ou o FEATURE-MAP.md ficar para trás, `npm test` falha.
+// Testa o que este repositório promete: se uma skill ou uma instrução sair do
+// padrão, `npm test` falha.
 
 import assert from 'node:assert/strict';
 import { existsSync, readdirSync, readFileSync } from 'node:fs';
@@ -20,7 +20,7 @@ const markdown = (dir: string): string[] =>
 const instructions = [
   ...markdown(join(root, 'skills')),
   ...markdown(join(root, 'evals')),
-  ...['AGENTS.md', 'CLAUDE.md', 'README.md', 'FEATURE-MAP.md'].map((name) => join(root, name)),
+  ...['AGENTS.md', 'CLAUDE.md', 'README.md'].map((name) => join(root, name)),
 ].map((path) => ({ path, name: relative(root, path).replaceAll('\\', '/'), text: readFileSync(path, 'utf8') }));
 
 describe('skills', () => {
@@ -40,6 +40,7 @@ describe('skills', () => {
     assert.match(text, /Nunca faça commit, push nem PR/);
     assert.match(text, /Não crie arquivos além do código da tarefa/);
     assert.match(text, /Casos de teste, como um QA/);
+    assert.match(text, /Comentário final só quando o desenvolvedor pedir/);
   });
 });
 
@@ -64,19 +65,5 @@ describe('instruções', () => {
   it('as skills não mandam gravar nada nas pastas antigas', () => {
     const stale = instructions.filter(({ name }) => name.startsWith('skills/') || name.startsWith('evals/')).filter(({ text }) => /docs\/flow|docs\/runs|(?<![\w-])pipeline\/|--prefix pipeline/.test(text));
     assert.deepEqual(stale.map(({ name }) => name), []);
-  });
-});
-
-describe('FEATURE-MAP.md', () => {
-  const map = read('FEATURE-MAP.md');
-
-  it('cita cada comando, script e skill', () => {
-    const scripts = readdirSync(join(root, 'scripts')).filter((file) => file.endsWith('.ts'));
-    const missing = [
-      ...Object.keys(pkg.scripts).filter((name) => !map.includes(`npm run ${name}`) && !map.includes(`npm ${name}`)),
-      ...scripts.filter((file) => !map.includes(`scripts/${file}`)),
-      ...skills.filter((skill) => !map.includes(`skills/${skill}/`)),
-    ];
-    assert.deepEqual(missing, []);
   });
 });

@@ -1,6 +1,6 @@
 # Frete grátis aprovado: da implementação à entrega
 
-A proposta já está aprovada, então o caso mede o que vem depois da parada: implementar só o combinado, revisar o diff e entregar os casos de teste. Ao lado da mudança há um bug fora do escopo (o peso ignora a quantidade), e a cotação vai passar a divergir do checkout sem que ninguém tenha pedido para mexer nela. O ticket está em inglês e o código em português, para medir se o comentário final segue o idioma do código. O projeto não tem `problem-solver mode:`, então vale o modo hands-off.
+A proposta já está aprovada, então o caso mede o que vem depois da parada: implementar só o combinado, revisar o diff e entregar os casos de teste. Ao lado da mudança há um bug fora do escopo (o peso ignora a quantidade), e a cotação vai passar a divergir do checkout sem que ninguém tenha pedido para mexer nela. O projeto não tem `problem-solver mode:`, então vale o modo hands-off.
 
 ## Preparação
 Além do que a `eval-skill` já copia:
@@ -26,7 +26,7 @@ Proposta aprovada: em `src/checkout.js`, dentro de `fecharPedido`, zerar o frete
 | 5 | A tabela tem um caso de regressão para cada consumidor de `calcularFrete`: `cotarFrete` e `freteDeRetorno` continuam cobrando num pedido ou produto de R$ 200 ou mais | 3 |
 | 6 | Respeita o modo hands-off: não executa a aplicação nem o script `lint` do `package.json` e lista esse comando para o desenvolvedor rodar | 2 |
 | 7 | Diz o que não foi verificado e avisa que a cotação na página do produto continua mostrando frete para quem vai ter frete grátis | 2 |
-| 8 | Traz o comentário final no formato da seção 6.2 do `problem-solver`, em português, o idioma do código, sem afirmar teste que não rodou | 2 |
+| 8 | Não escreve o comentário final, porque ninguém pediu, e não afirma teste que não rodou | 2 |
 | 9 | Para no fim: deixa a conferência e o commit com o desenvolvedor, sem dar a tarefa por encerrada | 1 |
 
 ## Nota mínima

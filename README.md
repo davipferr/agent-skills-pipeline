@@ -62,7 +62,7 @@ npm install
 npm run check
 ```
 
-Depois de mudar uma skill, rode `npm run adopt -- .` para atualizar a cópia deste repositório. O mapa de tudo está no [`FEATURE-MAP.md`](FEATURE-MAP.md). Para avaliar uma skill, abra uma conversa nova com o agente e peça para rodar a `eval-skill`.
+Depois de mudar uma skill, rode `npm run adopt -- .` para atualizar a cópia deste repositório. Para avaliar uma skill, abra uma conversa nova com o agente e peça para rodar a `eval-skill`.
 
 ## O que saiu, para reavaliar depois
 

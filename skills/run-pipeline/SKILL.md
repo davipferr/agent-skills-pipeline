@@ -73,9 +73,9 @@ Entregue na conversa:
    | 1 | <o que está sendo testado> | <o que fazer, na ordem> | <registro ou entrada> | <o que deve acontecer> |
 
 3. **O que não foi verificado**, os riscos aceitos, os problemas fora do escopo e os consumidores que não mudaram, mas passam a divergir da regra nova.
-4. **Comentário final**, pronto para colar na tarefa ou no PR, com as seções da 6.2 do `problem-solver` (Mudanças Feitas, Impacto, Riscos, Notas Adicionais, Evidências) e no idioma do código do projeto (português se o código for em português, inglês se for em inglês), mesmo que a tarefa ou a conversa estejam em outro.
-
 **Pare.** Se um caso falhar, use `investigate` com o resultado que o desenvolvedor trouxer e volte à etapa 3 ou 4. A tarefa termina quando ele aprovar; o commit e o PR são dele.
+
+**Comentário final só quando o desenvolvedor pedir.** A primeira versão raramente é a definitiva, então não o escreva antes disso, mesmo que a fase 10 do `problem-solver` diga para escrever. Quando ele pedir, deixe-o pronto para colar na tarefa ou no PR, sobre a versão final da mudança, com as seções da 6.2 do `problem-solver` (Mudanças Feitas, Impacto, Riscos, Notas Adicionais, Evidências) e no idioma do código do projeto (português se o código for em português, inglês se for em inglês), mesmo que a tarefa ou a conversa estejam em outro.
 
 ## Para continuar uma tarefa
 
