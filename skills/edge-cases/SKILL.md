@@ -15,7 +15,7 @@ O caminho principal quase sempre funciona. O bug que volta costuma estar no regi
 
 ## Passos
 
-1. **Liste as entradas e os estados** do que muda: parâmetros, campos lidos do banco, respostas de outros sistemas, situação do registro.
+1. **Liste as entradas e os estados** do que muda: parâmetros, campos lidos do banco, respostas de outros sistemas, situação do registro. Leia também onde esses dados são definidos: o significado de um nulo ou de um valor especial costuma estar lá, não no código que os usa.
 
 2. **Passe por cada grupo que se aplica:**
    - **Ausência:** nulo, vazio, campo que não veio, lista sem itens.
@@ -28,7 +28,7 @@ O caminho principal quase sempre funciona. O bug que volta costuma estar no regi
    - **Concorrência:** duas pessoas ou dois processos alterando o mesmo registro.
    - **Falha:** timeout, serviço fora do ar, erro no meio de um processo com vários passos. O que já foi gravado fica como?
 
-3. **Filtre.** Confira se uma camada acima já garante o caso: uma validação existente, uma constraint do banco, um campo obrigatório. Não adicione validação repetida nem trate o que não pode acontecer.
+3. **Filtre.** Leia quem chama o código que a tarefa toca antes de reportar. Confira se uma camada acima já garante o caso: uma validação existente, uma constraint do banco, um campo obrigatório. Não adicione validação repetida nem trate o que não pode acontecer. Sem ter lido quem chama, não afirme que nada protege o caso.
 
 4. **Decida cada caso que sobrou:**
    - O código já trata: segue.
