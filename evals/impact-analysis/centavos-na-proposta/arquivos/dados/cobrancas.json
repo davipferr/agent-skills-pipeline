@@ -1,0 +1,5 @@
+[
+  { "cliente": 1, "plano": "Básico", "valorCobrado": 29.9 },
+  { "cliente": 2, "plano": "Anual", "valorCobrado": 26.91 },
+  { "cliente": 3, "plano": "Legado", "valorCobrado": 19.9 }
+]
