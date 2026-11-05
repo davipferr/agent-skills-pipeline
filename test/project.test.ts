@@ -11,6 +11,7 @@ const root = fileURLToPath(new URL('..', import.meta.url));
 const read = (path: string) => readFileSync(join(root, path), 'utf8');
 const skills = readdirSync(join(root, 'skills'));
 const pkg = JSON.parse(read('package.json')) as { scripts: Record<string, string> };
+const supportSkills = ['impact-analysis', 'edge-cases', 'performance', 'security', 'data-change'];
 
 const markdown = (dir: string): string[] =>
   readdirSync(dir, { withFileTypes: true }).flatMap((d) => {
@@ -41,6 +42,15 @@ describe('skills', () => {
     assert.match(text, /Não crie arquivos além do código da tarefa/);
     assert.match(text, /Casos de teste, como um QA/);
     assert.match(text, /Comentário final só quando o desenvolvedor pedir/);
+    assert.match(text, /O foco é a tarefa, não o projeto/);
+  });
+
+  it('as skills de apoio estão no run-pipeline e ficam no escopo da tarefa', () => {
+    const pipeline = read('skills/run-pipeline/SKILL.md');
+    for (const skill of supportSkills) {
+      assert.ok(pipeline.includes('| `' + skill + '` |'), skill + ': falta na tabela do run-pipeline');
+      assert.match(read(`skills/${skill}/SKILL.md`), /^## Escopo$/m, `${skill}: falta a seção Escopo`);
+    }
   });
 });
 

@@ -28,7 +28,14 @@ tarefa → entender → analisar o código e o impacto → propor
 | [`run-pipeline`](skills/run-pipeline/SKILL.md) | Conduz a tarefa pelas etapas acima |
 | [`problem-solver`](skills/problem-solver/SKILL.md) | O método: evidência antes de opinião, causa raiz, escopo e impacto |
 | [`investigate`](skills/investigate/SKILL.md) | Diagnóstico curto de uma falha, sem adivinhar |
+| [`impact-analysis`](skills/impact-analysis/SKILL.md) | Acha quem realmente depende do código que vai mudar |
+| [`edge-cases`](skills/edge-cases/SKILL.md) | Vazio, nulo, limite, dado antigo, duplicidade e falhas no meio do processo |
+| [`performance`](skills/performance/SKILL.md) | Custo real (tempo × execuções), resolvido com a mudança mais simples |
+| [`security`](skills/security/SKILL.md) | O que um usuário mal-intencionado consegue fazer com o código |
+| [`data-change`](skills/data-change/SKILL.md) | Migrations e scripts: dados existentes, deploy e como desfazer |
 | [`eval-skill`](skills/eval-skill/SKILL.md) | Testa uma skill com casos de [`evals/`](evals/README.md). Fica só neste repositório |
+
+O `run-pipeline` só usa `impact-analysis`, `edge-cases`, `performance`, `security` e `data-change` quando a tarefa pede. Elas olham o código da tarefa, não o projeto inteiro: problemas em outros lugares são avisados, não corrigidos.
 
 ## Instalar
 
