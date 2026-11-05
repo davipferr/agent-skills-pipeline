@@ -14,7 +14,7 @@ Tudo acontece **na conversa**. O método de análise é a skill `problem-solver`
 - **Nunca faça commit, push nem PR.** Você só altera a árvore de trabalho. Quem revisa e publica é o desenvolvedor.
 - **Não crie arquivos além do código da tarefa.** Nada de plano, relatório, PRD, mapa ou log no repositório: o que precisa ser dito vai na conversa.
 - **Não escreva testes automatizados**, a não ser que o usuário peça ou a tarefa exija. A verificação é a etapa 6.
-- **O foco é a tarefa, não o projeto.** Resolva a tarefa da melhor maneira, sem reescrever a base nem mudar a estrutura, a não ser que a tarefa seja sobre isso. Um padrão ruim do projeto se respeita: avise em uma linha na entrega e siga.
+- **O foco é a tarefa, não o projeto.** Resolva a tarefa da melhor maneira, sem reescrever a base nem mudar a estrutura, a não ser que a tarefa seja sobre isso. Um padrão ruim do projeto fica como está: não copie e siga.
 - **Duas paradas obrigatórias:** você só implementa depois da aprovação da etapa 3, e a tarefa só termina quando o desenvolvedor diz.
 - Quem roda a aplicação é definido pelo modo do `problem-solver` (`problem-solver mode:` no `CLAUDE.md` do projeto). Sem essa linha, o modo é **hands-off**: você não executa nem depura, e transforma cada verificação em instruções precisas para o desenvolvedor.
 
@@ -61,7 +61,7 @@ O tamanho acompanha a tarefa: uma correção simples cabe em três linhas. **Par
 
 ### 4. Implementar
 
-Faça o que foi aprovado, e só isso. Reaproveite o que existe e siga o estilo do arquivo. Se a realidade contrariar a proposta (outro consumidor, outra causa, escopo maior), pare e volte à etapa 3. Problemas fora do escopo são reportados, não corrigidos.
+Faça o que foi aprovado, e só isso. Reaproveite o que existe e siga o estilo do arquivo. Se a realidade contrariar a proposta (outro consumidor, outra causa, escopo maior), pare e volte à etapa 3. Um problema fora do escopo só é reportado se afetar a tarefa, e não é corrigido.
 
 ### 5. Revisar o próprio diff
 
@@ -87,7 +87,7 @@ Entregue na conversa:
    |---|---------|--------|-------|--------------------|
    | 1 | <o que está sendo testado> | <o que fazer, na ordem> | <registro ou entrada> | <o que deve acontecer> |
 
-3. **O que não foi verificado**, os riscos aceitos, os problemas fora do escopo e os consumidores que não mudaram, mas passam a divergir da regra nova.
+3. **O que não foi verificado**, os riscos aceitos, os problemas fora do escopo que afetam a tarefa e os consumidores que não mudaram, mas passam a divergir da regra nova.
 
 **Pare.** Se um caso falhar, use `investigate` com o resultado que o desenvolvedor trouxer e volte à etapa 3 ou 4. A tarefa termina quando ele aprovar; o commit e o PR são dele.
 

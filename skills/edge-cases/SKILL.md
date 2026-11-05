@@ -9,8 +9,8 @@ O caminho principal quase sempre funciona. O bug que volta costuma estar no regi
 
 ## Escopo
 
-- Olhe só as entradas e os estados do código que a tarefa toca, a não ser que a própria tarefa seja sobre isso.
-- Se o mesmo problema existir em outros lugares, avise em uma linha na entrega e não corrija.
+- Confira só as entradas e os estados do código que a tarefa toca, a não ser que a própria tarefa seja sobre isso.
+- Consulte o projeto sempre que precisar de contexto, mas o que está errado fora da tarefa fica como está: não corrija, não avise e não copie o exemplo ruim. Só fale de um problema fora da tarefa se ele afetar a tarefa.
 - Não invente achados: só entra o caso que pode acontecer neste código.
 
 ## Passos

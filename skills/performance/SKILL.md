@@ -9,8 +9,8 @@ Uma query de 50 ms parece barata. Executada 20 mil vezes, ela custa mais de 16 m
 
 ## Escopo
 
-- Olhe só o código que a tarefa toca, a não ser que a própria tarefa seja sobre performance.
-- Se o mesmo problema existir em outros lugares ou fizer parte do padrão do projeto, avise em uma linha na entrega e não corrija. Um padrão ruim do projeto não é motivo para reestruturar outras queries ou endpoints.
+- Confira só o código que a tarefa toca, a não ser que a própria tarefa seja sobre performance.
+- Consulte o projeto sempre que precisar de contexto, mas o que está errado fora da tarefa fica como está: não corrija, não avise e não copie o exemplo ruim. Só fale de um problema fora da tarefa se ele afetar a tarefa. Um padrão ruim do projeto não é motivo para reestruturar outras queries ou endpoints.
 - Não invente achados: se não há custo relevante, não diga nada.
 
 ## Passos

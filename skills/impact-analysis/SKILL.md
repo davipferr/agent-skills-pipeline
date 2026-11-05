@@ -10,7 +10,7 @@ Regressão nasce de um consumidor que ninguém lembrou. Uma busca pelo nome da f
 ## Escopo
 
 - A análise cobre os consumidores do código que a tarefa muda, e não o projeto inteiro.
-- Se encontrar um problema num consumidor que não tem relação com a mudança, avise em uma linha na entrega e não corrija.
+- Consulte o projeto sempre que precisar de contexto, mas o que está errado fora da tarefa fica como está: não corrija, não avise e não copie o exemplo ruim. Só fale de um problema fora da tarefa se ele afetar a tarefa.
 - Não invente achados: se o código só é usado num lugar, diga isso e siga.
 
 ## Passos

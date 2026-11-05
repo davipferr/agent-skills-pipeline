@@ -9,8 +9,8 @@ A pergunta desta skill é uma só: **o que um usuário mal-intencionado consegue
 
 ## Escopo
 
-- Olhe só o código que a tarefa toca, a não ser que a própria tarefa seja sobre segurança.
-- Uma falha fora da tarefa não é corrigida aqui. Se for grave, destaque-a na entrega, com o risco e onde está, para o desenvolvedor decidir. Se for menor, avise em uma linha.
+- Confira só o código que a tarefa toca, a não ser que a própria tarefa seja sobre segurança.
+- Consulte o projeto sempre que precisar de contexto, mas o que está errado fora da tarefa fica como está: não corrija, não avise e não copie o exemplo ruim. Só fale de um problema fora da tarefa se ele afetar a tarefa.
 - Não invente achados: se não há caminho de ataque, não diga nada.
 
 ## Passos

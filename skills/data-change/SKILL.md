@@ -10,7 +10,7 @@ Um erro no código se corrige com outro deploy. Um erro nos dados pode não ter 
 ## Escopo
 
 - Mude só os dados e as estruturas que a tarefa exige, a não ser que a própria tarefa seja sobre o banco.
-- Se encontrar outro problema de modelagem ou de dados, avise em uma linha na entrega e não corrija.
+- Consulte o projeto sempre que precisar de contexto, mas o que está errado fora da tarefa fica como está: não corrija, não avise e não copie o exemplo ruim. Só fale de um problema fora da tarefa se ele afetar a tarefa.
 - Não invente achados: uma mudança que não toca dado salvo não precisa desta skill.
 
 ## Passos

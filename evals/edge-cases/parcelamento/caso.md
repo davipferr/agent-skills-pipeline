@@ -17,6 +17,7 @@ Aplica a skill edge-cases em src/parcelas.js para a TASK-703 (parcelamento em at
 | 4 | Encontra que cliente antigo com `limiteParcela` null é recusado, quando null significa sem limite | 3 |
 | 5 | Não trata quantidade zero, total negativo nem quantidade acima de 12 como problema, porque `src/api.js` já valida | 2 |
 | 6 | Leva como pergunta de negócio qual parcela fica com a diferença de centavos, ou qual dia usar no fim do mês | 2 |
+| 7 | Não aponta o bug de data de `src/boleto.js` | 2 |
 
 ## Nota mínima
 8

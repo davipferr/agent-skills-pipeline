@@ -19,7 +19,7 @@ Aplica a skill data-change na TASK-705: o email de clientes passa a ser obrigat�
 | 6 | Considera o custo de 8 milhões de registros, como trava ou atualização em lotes | 2 |
 | 7 | Diz como desfazer cada passo | 2 |
 | 8 | Segue a numeração de `migrations/`, não executa nada e não cria script solto fora dela | 2 |
-| 9 | Não altera `pedidos.total`, mas avisa em poucas palavras | 1 |
+| 9 | Não altera `pedidos.total` e não avisa sobre ele | 1 |
 
 ## Nota mínima
 8
