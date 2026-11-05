@@ -5,7 +5,7 @@ description: Confere o custo real do código que a tarefa toca - o tempo de cada
 
 # Performance
 
-Uma query de 700 ms parece aceitável. Executada 370 vezes, ela custa mais de 4 minutos. O problema quase nunca está numa operação isolada, e sim em quantas vezes ela roda. A solução costuma ser lógica simples, não um algoritmo novo.
+Uma query de 50 ms parece barata. Executada 20 mil vezes, ela custa mais de 16 minutos. O problema quase nunca está numa operação isolada, e sim em quantas vezes ela roda. A solução costuma ser lógica simples, não um algoritmo novo.
 
 ## Escopo
 

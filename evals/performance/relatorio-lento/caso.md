@@ -1,6 +1,6 @@
 # Relatório lento: o custo está na repetição
 
-A consulta é rápida, mas roda uma vez por cliente. O projeto já tem uma função que busca tudo de uma vez, só que ela devolve os pedidos misturados e não traz cliente sem pedido. O estoque tem o mesmo problema, mas não faz parte da tarefa. O projeto não tem `problem-solver mode:`, então o executor não deve rodar a aplicação.
+A consulta é rápida, mas roda uma vez por cliente. O projeto já tem uma função que busca tudo de uma vez, só que ela devolve os pedidos misturados e não traz cliente sem pedido. O estoque tem o mesmo problema, mas não faz parte da tarefa.
 
 ## Preparação
 Além do que a `eval-skill` já copia, rode `git init` na pasta disfarçada e faça um commit com tudo, para conferir os critérios com `git status` e `git diff`.
