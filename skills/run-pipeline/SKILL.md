@@ -16,7 +16,7 @@ Tudo acontece **na conversa**. O método de análise é a skill `problem-solver`
 - **Não escreva testes automatizados**, a não ser que o usuário peça ou a tarefa exija. A verificação é a etapa 6.
 - **O foco é a tarefa, não o projeto.** Resolva a tarefa da melhor maneira, sem reescrever a base nem mudar a estrutura, a não ser que a tarefa seja sobre isso. Um padrão ruim do projeto fica como está: não copie e siga.
 - **Duas paradas obrigatórias:** você só implementa depois da aprovação da etapa 3, e a tarefa só termina quando o desenvolvedor diz.
-- Quem roda a aplicação é definido pelo modo do `problem-solver` (`problem-solver mode:` no `CLAUDE.md` do projeto). Sem essa linha, o modo é **hands-off**: você não executa nem depura, e transforma cada verificação em instruções precisas para o desenvolvedor. Ler o código e o `git diff` não é executar: isso você faz em qualquer modo.
+- Quem roda a aplicação é definido pelo modo do `problem-solver` (`problem-solver mode:` no `CLAUDE.md` do projeto). Sem essa linha, o modo é **hands-off**: você não roda a aplicação nem depura, e transforma cada verificação em instruções precisas para o desenvolvedor. Ler o código e o `git diff` não é executar, e a prova da etapa 5, num script descartável fora do projeto, não é rodar a aplicação: isso você faz em qualquer modo.
 
 ## Skills de apoio
 
@@ -69,10 +69,12 @@ Leia o `git diff` inteiro como se outra pessoa tivesse escrito:
 
 - Cada linha se justifica e resolve a causa, não o sintoma?
 - Sobrou código de debug, valor fixo ou arquivo solto?
+- Algum comentário conta a história da mudança ou cita a tarefa (`// TASK-123: corrigido`, `// antes era X`)? Tire: isso fica no commit, que é do desenvolvedor. Comentário explica por que o código é assim, e só quando o código não diz sozinho.
 - Cada consumidor da etapa 2 continua funcionando? Cada risco da etapa 3 foi coberto?
 - O código que você escreveu passa nas skills de apoio usadas na etapa 2? A mudança trouxe alguma condição nova da tabela?
-- O código ao redor da mudança tem algum problema que não é da tarefa? Reporte na entrega, sem corrigir.
 - Compila? Se o projeto tem build ou lint, rode-os no modo hands-on ou liste o comando no modo hands-off.
+
+**Prove a lógica que mudou.** Um agente que não roda o que escreveu está adivinhando. Quando a mudança tem lógica que dá para rodar sem a aplicação (uma função, um cálculo, uma regra, uma query montada), copie o necessário para uma pasta temporária fora do projeto e rode ali um script descartável com os cenários da etapa 2: o caminho principal, as bordas e cada consumidor. Rode antes e depois da mudança quando o comportamento antigo importar. Sem banco, rede nem serviço real: o que depende deles vira instrução para o desenvolvedor. Guarde o comando e a saída para a entrega e apague a pasta. Se não der para isolar a lógica, diga isso na entrega.
 
 Corrija o que encontrar antes de entregar.
 
@@ -80,7 +82,7 @@ Corrija o que encontrar antes de entregar.
 
 Só entregue depois de ler o `git diff` na etapa 5. Entregue na conversa:
 
-1. **O que mudou**, em poucas linhas, com os arquivos.
+1. **O que mudou**, em poucas linhas, com os arquivos, e a prova da etapa 5: o comando e a saída.
 2. **Casos de teste, como um QA escreveria**, para o desenvolvedor conferir a entrega. Cubra o caminho principal, as bordas (vazio, zero, limite, dado antigo), **a regressão de cada consumidor** da etapa 2 e o que as skills de apoio apontaram. Um caso por comportamento diferente:
 
    | # | Cenário | Passos | Dados | Resultado esperado |

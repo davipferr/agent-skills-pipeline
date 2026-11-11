@@ -1,6 +1,6 @@
 ---
 name: eval-skill
-description: Testa uma skill como se fosse código. Roda os casos de evals/<skill>/ num agente sem contexto, dá nota pelos critérios de cada caso e, se a nota ficar abaixo do mínimo, propõe e testa melhorias no SKILL.md até passar. Funciona com qualquer agente. Use quando o usuário pedir para avaliar, testar ou melhorar uma skill, ou depois de mudar um SKILL.md para saber se ele ficou melhor ou pior.
+description: Testa uma skill como se fosse código. Roda os casos de evals/<skill>/ num agente sem contexto, dá nota pelos critérios de cada caso e, se a nota ficar abaixo do mínimo, propõe e testa melhorias no SKILL.md até passar. Funciona com qualquer agente. Use quando o usuário pedir para avaliar, testar ou melhorar uma skill, depois de mudar um SKILL.md para saber se ele ficou melhor ou pior, ou quando ele contar que corrigiu o agente numa tarefa real e quiser que o erro não se repita.
 ---
 
 # Avaliar uma skill
@@ -34,6 +34,15 @@ O formato dos casos está em `evals/README.md`.
    - Aplique, rode `npm run adopt -- .` e volte ao passo 2 com **todos** os casos da skill, não só o que falhou: melhorar um caso pode piorar outro.
 
 6. **Resuma na conversa**, sem gravar arquivo de resultado: para cada caso, o executor e o juiz (agente e modelo), a nota por critério com o trecho que a justifica, a nota final e o mínimo; depois, as notas antes e depois de cada rodada, o que mudou no `SKILL.md` e o que continua abaixo do mínimo. O histórico fica no git: os casos em `evals/` e as mudanças em `skills/`.
+
+## Quando o agente errou numa tarefa real
+
+Toda correção que o desenvolvedor faz mais de uma vez deveria virar regra. O caminho é um caso que reproduz o erro, e só depois uma mudança na skill.
+
+1. **Entenda o erro.** Peça ao usuário o que o agente fez, o que ele corrigiu e por quê. Descubra qual skill deveria ter evitado o erro, e se ela foi carregada: se não foi, o problema está na `description`, e não no corpo.
+2. **Escreva um caso que reproduza o mesmo tipo de erro**, com o formato do `evals/README.md`. Os `arquivos/` são inventados: **nada do código, dos nomes, dos dados ou das regras da empresa**, porque este repositório é público. Copie o padrão do erro, e não a situação. Um critério cobra o comportamento certo, e outro cobra que a skill não exagere na correção. Mostre o caso e espere a aprovação antes de gravar.
+3. **Rode o caso na skill atual, antes de mudar qualquer coisa.** Ele precisa falhar. Se passar, o caso não reproduz o erro: ajuste o caso, não a skill.
+4. **Suba a nota pelo passo 5**, com todos os casos da skill. A mudança no `SKILL.md` é geral: ela ensina o que o desenvolvedor corrigiu, sem citar o caso.
 
 ## Regras
 

@@ -5,7 +5,28 @@ import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { describe, it } from 'node:test';
 import { fileURLToPath } from 'node:url';
-import { installPaths, isSkillsFolder, skillsFor, snapshot } from '../scripts/lib/adopt.ts';
+import { BLOCK_START, importsAgents, installPaths, isSkillsFolder, skillsFor, snapshot, withBlock } from '../scripts/lib/adopt.ts';
+
+describe('adopt: bloco de instruções', () => {
+  it('cria o arquivo, acrescenta no fim e troca só o bloco ao rodar de novo', () => {
+    assert.match(withBlock(undefined, 'v1'), /^<!-- .+ -->\nv1\n<!-- .+ -->\n$/);
+    const mine = '# Minhas regras\n\nNão mexa.\n';
+    const first = withBlock(mine, 'v1');
+    assert.ok(first.startsWith(mine));
+    const second = withBlock(first + 'Depois do bloco.\n', 'v2');
+    assert.ok(second.startsWith(mine));
+    assert.ok(second.includes('v2') && !second.includes('v1'));
+    assert.ok(second.endsWith('Depois do bloco.\n'));
+    assert.equal(second.split(BLOCK_START).length, 2, 'bloco duplicado');
+  });
+
+  it('reconhece um CLAUDE.md que importa o AGENTS.md', () => {
+    assert.ok(importsAgents('@AGENTS.md\n'));
+    assert.ok(importsAgents('# Projeto\n\n@./AGENTS.md\n'));
+    assert.equal(importsAgents('Leia o AGENTS.md'), false);
+    assert.equal(importsAgents(undefined), false);
+  });
+});
 
 function withFolder(run: (dir: string) => void) {
   const dir = mkdtempSync(join(tmpdir(), 'adopt-'));
@@ -70,6 +91,30 @@ describe('adopt (script)', () => {
         }
         assert.equal(existsSync(skill(home, agentDir, 'eval-skill')), false);
       }
+    });
+  });
+
+  it('sem pasta, põe as instruções no CLAUDE.md e no AGENTS.md globais sem apagar o que já existe', () => {
+    withFolder((home) => {
+      mkdirSync(join(home, '.claude'));
+      writeFileSync(join(home, '.claude', 'CLAUDE.md'), '# Minhas regras\n');
+      for (let run = 0; run < 2; run++) assert.equal(adopt(home).status, 0);
+      const claude = readFileSync(join(home, '.claude', 'CLAUDE.md'), 'utf8');
+      assert.ok(claude.startsWith('# Minhas regras\n'));
+      assert.equal(claude.split(BLOCK_START).length, 2, 'bloco duplicado');
+      assert.match(claude, /run-pipeline/);
+      assert.match(readFileSync(join(home, '.codex', 'AGENTS.md'), 'utf8'), /run-pipeline/);
+    });
+  });
+
+  it('num projeto, não repete o bloco no CLAUDE.md que importa o AGENTS.md', () => {
+    withFolder((home) => {
+      const project = join(home, 'projeto');
+      mkdirSync(project);
+      writeFileSync(join(project, 'CLAUDE.md'), '@AGENTS.md\n\nproblem-solver mode: hands-on\n');
+      assert.equal(adopt(home, project).status, 0);
+      assert.equal(readFileSync(join(project, 'CLAUDE.md'), 'utf8'), '@AGENTS.md\n\nproblem-solver mode: hands-on\n');
+      assert.match(readFileSync(join(project, 'AGENTS.md'), 'utf8'), /run-pipeline/);
     });
   });
 

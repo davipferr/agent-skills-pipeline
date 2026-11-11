@@ -33,7 +33,7 @@ tarefa → entender → analisar o código e o impacto → propor
 | [`performance`](skills/performance/SKILL.md) | Custo real (tempo × execuções), resolvido com a mudança mais simples |
 | [`security`](skills/security/SKILL.md) | O que um usuário mal-intencionado consegue fazer com o código |
 | [`data-change`](skills/data-change/SKILL.md) | Migrations e scripts: dados existentes, deploy e como desfazer |
-| [`eval-skill`](skills/eval-skill/SKILL.md) | Testa uma skill com casos de [`evals/`](evals/README.md). Fica só neste repositório |
+| [`eval-skill`](skills/eval-skill/SKILL.md) | Testa uma skill com casos de [`evals/`](evals/README.md) e transforma uma correção feita numa tarefa real num caso novo. Fica só neste repositório |
 
 O `run-pipeline` só usa `impact-analysis`, `edge-cases`, `performance`, `security` e `data-change` quando a tarefa pede. Elas olham o código da tarefa, não o projeto inteiro: problemas em outros lugares são avisados, não corrigidos.
 
@@ -47,7 +47,9 @@ npm run adopt
 
 O `adopt` copia as skills para as pastas globais, `.claude/skills/` e `.agents/skills/` da pasta do usuário. Elas passam a valer em todos os projetos, sem nenhum arquivo dentro deles, o que serve bem para tarefas que mexem em mais de um projeto. Rode o mesmo comando para atualizar: se uma skill já existir com outro conteúdo, ele mostra qual é e só a troca com `--force`. As outras skills da pasta não são tocadas.
 
-Para instalar num projeto só, passe a pasta dele. As skills aparecem no git do projeto como qualquer arquivo novo:
+Junto com as skills, o `adopt` grava as regras de [`instrucoes.md`](instrucoes.md), que mandam usar o `run-pipeline` em toda tarefa, no `.claude/CLAUDE.md` (Claude Code) e no `.codex/AGENTS.md` (Codex) da pasta do usuário. Elas ficam num bloco marcado: o resto desses arquivos não muda, e rodar de novo troca só o bloco.
+
+Para instalar num projeto só, passe a pasta dele. As skills e o bloco, no `CLAUDE.md` e no `AGENTS.md` da raiz, aparecem no git do projeto como qualquer mudança. Se o `CLAUDE.md` já importa o `AGENTS.md` (`@AGENTS.md`), só o `AGENTS.md` recebe o bloco:
 
 ```bash
 npm run adopt -- C:/caminho/do/projeto
@@ -71,6 +73,8 @@ npm run check
 
 Depois de mudar uma skill, rode `npm run adopt -- .` para atualizar a cópia deste repositório. Para avaliar uma skill, abra uma conversa nova com o agente e peça para rodar a `eval-skill`.
 
+Quando eu corrigir o agente numa tarefa, conto aqui o que ele errou: a `eval-skill` escreve um caso inventado com o mesmo tipo de erro, confirma que a skill falha nele e só então muda a skill. Nada da empresa entra no caso.
+
 ## O que saiu, para reavaliar depois
 
 A versão anterior seguia a ideia de automação total da curva de confiança de Lauren Tan. Numa empresa, isso não cabe de uma vez: a automação cresce passo a passo. Tudo isto está no git, no commit `df32200`, e pode voltar se fizer falta:
@@ -80,7 +84,6 @@ A versão anterior seguia a ideia de automação total da curva de confiança de
 | `capture-idea`, `write-prd`, `plan-architecture` | Ideia, PRD e arquitetura em arquivos | A tarefa já vem da empresa; a análise cabe na conversa |
 | `tdd`, `grilling`, `codebase-design` | Testes primeiro e interrogatório | Não refletem o trabalho real; os casos de QA substituem os testes |
 | `verify`, `review-against-prd`, `ship-report` | Verificação, revisão e relatório em arquivos | Viraram etapas curtas do `run-pipeline`, sem arquivos |
-| `harden` | Trabalho manual vira regra dura | Reavaliar quando houver histórico de tarefas reais |
 | `onboard`, `find-skills`, `FEATURE-MAP.md` por projeto | Mapa do código e skills da stack | Geram arquivos que não podem ir para o projeto |
 | `docs/flow/`, `flow.yaml`, `status`, `guard`, `validate`, `archive`, `diagram`, `new-skill` | Artefatos entre etapas e as checagens deles | Sem artefatos, não há o que checar |
 | Skills do skills.sh (`skills.json`, `setup`) | Instalação de skills externas | Nenhuma foi útil no trabalho real; o `adopt` copia as skills locais |
