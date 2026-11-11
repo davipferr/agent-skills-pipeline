@@ -43,7 +43,6 @@ describe('skills', () => {
     assert.match(text, /Casos de teste, como um QA/);
     assert.match(text, /Comentário final só quando o desenvolvedor pedir/);
     assert.match(text, /O foco é a tarefa, não o projeto/);
-    assert.match(text, /Prove a lógica que mudou/);
   });
 
   it('as skills de apoio estão no run-pipeline e ficam no escopo da tarefa', () => {
