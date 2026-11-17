@@ -33,6 +33,7 @@ tarefa → entender → analisar o código e o impacto → propor
 | [`performance`](skills/performance/SKILL.md) | Custo real (tempo × execuções), resolvido com a mudança mais simples |
 | [`security`](skills/security/SKILL.md) | O que um usuário mal-intencionado consegue fazer com o código |
 | [`data-change`](skills/data-change/SKILL.md) | Migrations e scripts: dados existentes, deploy e como desfazer |
+| [`resolve-conflicts`](skills/resolve-conflicts/SKILL.md) | Resolve conflitos de merge sem apagar o trabalho dos colegas e confere antes do PR se a branch não sobrescreve nada. Só roda quando você pede |
 | [`eval-skill`](skills/eval-skill/SKILL.md) | Testa uma skill com casos de [`evals/`](evals/README.md) e transforma uma correção feita numa tarefa real num caso novo. Fica só neste repositório |
 
 O `run-pipeline` só usa `impact-analysis`, `edge-cases`, `performance`, `security` e `data-change` quando a tarefa pede. Elas olham o código da tarefa, não o projeto inteiro: problemas em outros lugares são avisados, não corrigidos.

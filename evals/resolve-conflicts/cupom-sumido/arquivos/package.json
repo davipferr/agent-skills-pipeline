@@ -1,0 +1,9 @@
+{
+  "name": "loja-front",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node --check src/menu.js && node --check src/rotas.js && node --check src/config/ambiente.js && node --check src/config/limites.js"
+  }
+}

@@ -24,7 +24,11 @@ O formato dos casos está em `evals/README.md`.
    - o usuário: peça que abra uma sessão nova do agente que preferir na pasta e cole o pedido;
    - só em último caso, um subagente da sua ferramenta, trabalhando na pasta disfarçada, com só o "Pedido" do caso como prompt. Ele pode herdar as instruções e o `git status` deste repositório, que citam os casos e as regras: se usar, diga no resumo que as notas não são de um agente limpo.
 
-   Anote qual agente e qual modelo executaram.
+   **O executor não usa as instruções globais do usuário** (`~/.claude/CLAUDE.md`, `~/.codex/AGENTS.md` e as equivalentes de outros agentes), nem as deste repositório. Elas falam de outros projetos e regras, e mudam o resultado. O executor só pode ter o pedido, a skill avaliada e os arquivos da pasta disfarçada:
+   - na linha de comando, use a opção do agente que deixa de carregar as instruções do usuário. Se ele não tiver uma, aponte a pasta de configuração dele para uma pasta temporária vazia, só com o login (ex.: `CLAUDE_CONFIG_DIR`, `CODEX_HOME`);
+   - numa sessão aberta pelo usuário ou num subagente, comece o pedido dizendo que todo `CLAUDE.md`, `AGENTS.md` e memória de fora da pasta deve ser ignorado.
+
+   Anote qual agente e qual modelo executaram e como as instruções globais foram deixadas de fora. Se não deu para tirá-las, diga isso no resumo: as notas valem menos.
 
 4. **Julgue.** Antes, confira na transcrição se o executor chamou a skill avaliada ou leu o `SKILL.md` dela. Se não, o caso é inválido: não dê nota e diga isso no resumo. Se nenhum caso carregou a skill, a mudança a propor no passo 5 é na `description`, porque ninguém leu o corpo. Sem transcrição, peça uma ao usuário. Para cada critério do caso, dê uma nota de 0 a 10 e justifique citando um trecho do que o executor produziu. Sem trecho, nota 0. A nota do caso é a média ponderada pelos pesos. Se der, julgue com um agente ou modelo **diferente** do executor e diga qual foi.
 
