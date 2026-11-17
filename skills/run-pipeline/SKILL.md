@@ -1,6 +1,6 @@
 ---
 name: run-pipeline
-description: Use sempre que o usuário passar uma tarefa, um ticket, um work item ou um bug para resolver, antes de ler o código ou alterar qualquer arquivo, mesmo que a tarefa pareça simples ou a proposta já venha pronta e aprovada, e quando ele pedir para rodar, continuar ou retomar o pipeline. Conduz a tarefa do início ao fim com o desenvolvedor no controle - entende a tarefa, analisa o código e o impacto, propõe, espera a aprovação, implementa sem criar regressão, revisa o próprio diff e entrega os casos de teste como um QA faria. Nada é gravado além do código da tarefa, e o agente nunca faz commit nem abre PR.
+description: Use sempre que o usuário passar uma tarefa, um ticket, um work item ou um bug para resolver, antes de ler o código ou alterar qualquer arquivo, mesmo que a tarefa pareça simples ou a proposta já venha pronta e aprovada, e quando ele pedir para rodar, continuar ou retomar o pipeline. Conduz a tarefa do início ao fim com o desenvolvedor no controle - entende a tarefa, analisa o código e o impacto, propõe, espera a aprovação, implementa sem criar regressão, revisa o diff com um revisor de fora e entrega os casos de teste como um QA faria. Nada é gravado além do código da tarefa, e o agente nunca faz commit nem abre PR.
 ---
 
 # Rodar o pipeline
@@ -63,22 +63,22 @@ O tamanho acompanha a tarefa: uma correção simples cabe em três linhas. **Par
 
 Faça o que foi aprovado, e só isso. Reaproveite o que existe e siga o estilo do arquivo. Se a realidade contrariar a proposta (outro consumidor, outra causa, escopo maior), pare e volte à etapa 3. Um problema fora do escopo só é reportado se afetar a tarefa, e não é corrigido.
 
-### 5. Revisar o próprio diff
+### 5. Revisar o diff
 
-Leia o `git diff` inteiro como se outra pessoa tivesse escrito:
+Você lê o próprio diff confirmando o que quis fazer, então a revisão é de alguém de fora: use a skill `review-diff`. Passe ao revisor o pedido da tarefa e as decisões de negócio do desenvolvedor, e não passe a proposta, a análise nem as suas justificativas. Peça que ele leia a skill primeiro e escreva a regra antes de abrir o diff ou o código.
 
-- Cada linha se justifica e resolve a causa, não o sintoma?
-- Sobrou código de debug, valor fixo ou arquivo solto?
-- Algum comentário conta a história da mudança ou cita a tarefa (`// TASK-123: corrigido`, `// antes era X`)? Tire: isso fica no commit, que é do desenvolvedor. Comentário explica por que o código é assim, e só quando o código não diz sozinho.
+Depois, confira o que só você sabe:
+
+- A mudança resolve a causa encontrada na etapa 2, e não só o sintoma?
 - Cada consumidor da etapa 2 continua funcionando? Cada risco da etapa 3 foi coberto?
 - O código que você escreveu passa nas skills de apoio usadas na etapa 2? A mudança trouxe alguma condição nova da tabela?
 - Compila? Se o projeto tem build ou lint, rode-os no modo hands-on ou liste o comando no modo hands-off.
 
-Corrija o que encontrar antes de entregar.
+Corrija o que encontrar antes de entregar. Um achado do revisor só é descartado com evidência no código ou com uma decisão do desenvolvedor.
 
 ### 6. Entregar e parar
 
-Só entregue depois de ler o `git diff` na etapa 5. Entregue na conversa:
+Só entregue depois da revisão da etapa 5. Entregue na conversa:
 
 1. **O que mudou**, em poucas linhas, com os arquivos.
 2. **Casos de teste, como um QA escreveria**, para o desenvolvedor conferir a entrega. Cubra o caminho principal, as bordas (vazio, zero, limite, dado antigo), **a regressão de cada consumidor** da etapa 2 e o que as skills de apoio apontaram. Um caso por comportamento diferente:
@@ -87,7 +87,7 @@ Só entregue depois de ler o `git diff` na etapa 5. Entregue na conversa:
    |---|---------|--------|-------|--------------------|
    | 1 | <o que está sendo testado> | <o que fazer, na ordem> | <registro ou entrada> | <o que deve acontecer> |
 
-3. **O que não foi verificado**, os riscos aceitos, os problemas fora do escopo que afetam a tarefa e os consumidores que não mudaram, mas passam a divergir da regra nova.
+3. **O que não foi verificado**, os achados do revisor que ficaram em aberto ou que você descartou (com a evidência), as perguntas de negócio do revisor, se a revisão foi feita no mesmo contexto, os riscos aceitos, os problemas fora do escopo que afetam a tarefa e os consumidores que não mudaram, mas passam a divergir da regra nova.
 
 **Pare.** Se um caso falhar, use `investigate` com o resultado que o desenvolvedor trouxer e volte à etapa 3 ou 4. A tarefa termina quando ele aprovar; o commit e o PR são dele.
 
